@@ -24,6 +24,7 @@ class Router extends Component {
       // console.log(user);
       if (user.isAuthenticated) {
          fetchFeeds(user._id);
+         this.setState({ isDrawerOpen: true });
       }
    }
 
@@ -32,6 +33,8 @@ class Router extends Component {
          isDrawerOpen: !state.isDrawerOpen,
       }));
    };
+
+   closeDrawer = () => this.setState({ isDrawerOpen: false });
 
    render() {
       const { isDrawerOpen } = this.state;
@@ -46,13 +49,17 @@ class Router extends Component {
                path="/(.+)"
                render={() => (
                   <Fragment>
-                     <Navbar handleDrawer={this.handleDrawer} user={user} />
+                     <Navbar
+                        closeDrawer={this.closeDrawer}
+                        handleDrawer={this.handleDrawer}
+                        user={user}
+                     />
                      <Grid classes={classes.router} container>
                         <SideDrawer
                            className="drawer"
                            open={isDrawerOpen}
                            user={user}
-                           width="250px"
+                           width="268px"
                         />
                         {/* <Grid
                            classes={classes}
@@ -66,14 +73,19 @@ class Router extends Component {
                            xs={12}
                            style={{
                               maxWidth: '100%',
-                              paddingLeft: isDrawerOpen ? '250px' : '0',
+                              marginLeft: isDrawerOpen ? '268px' : '0',
                            }}
                         >
                            <Switch>
                               <Route exact path="/reader" component={Home} />
                               <Route path="/reader/:feedId" component={FeedPage} />
                               <Route path="/register" component={Register} />
-                              <Route path="/login" component={Login} />
+                              <Route
+                                 path="/login"
+                                 render={props => (
+                                    <Login handleDrawer={this.handleDrawer} {...props} />
+                                 )}
+                              />
                            </Switch>
                         </Grid>
                      </Grid>
@@ -96,7 +108,10 @@ const mapStates = state => ({
 
 Router.propTypes = {
    fetchFeeds: PropTypes.func.isRequired,
-   user: PropTypes.object.isRequired,
+   user: PropTypes.shape({
+      _id: PropTypes.string,
+      isAuthenticated: PropTypes.bool.isRequired,
+   }).isRequired,
 };
 
 export default withRouter(

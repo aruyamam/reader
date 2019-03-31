@@ -15,10 +15,11 @@ class Register extends Component {
 
    handleSubmit = async (event) => {
       event.preventDefault();
-      const { history, loginUser } = this.props;
+      const { handleDrawer, history, loginUser } = this.props;
       const user = Object.assign({}, this.state);
       await loginUser(user);
       history.push('/reader');
+      handleDrawer();
    };
 
    handleInputChange = (event) => {

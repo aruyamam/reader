@@ -10,10 +10,11 @@ import classes from './Navbar.css';
 import { logoutUser } from '../../store/actions/authAction';
 
 const Navbar = ({
-   handleDrawer, history, logoutUser, user,
+   closeDrawer, handleDrawer, history, logoutUser, user,
 }) => {
    const handleLogout = () => {
       logoutUser(history);
+      closeDrawer();
       history.push('/login');
    };
 

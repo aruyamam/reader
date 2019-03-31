@@ -1,9 +1,9 @@
 .drawer {
    position: absolute;
-   left: 0;
+   left: -250px;
    flex-shrink: 0;
    overflow-y: auto;
-   transition: 'All .3s ease-out';
+   transition: left .3s ease-out;
 }
 
 .holder {
@@ -33,5 +33,5 @@
 }
 
 .open {
-   left: -250px;
+   left: 0px;
 }
