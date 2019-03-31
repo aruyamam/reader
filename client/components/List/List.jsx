@@ -14,8 +14,11 @@ class List extends Component {
 }
 
 List.propTypes = {
-   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string])
-      .isRequired,
+   children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.element),
+      PropTypes.string,
+   ]).isRequired,
 };
 
 export default List;

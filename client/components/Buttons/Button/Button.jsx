@@ -31,9 +31,11 @@ const Button = ({
          duration: 400,
          timing: circ,
          draw: (progress) => {
-            el.current.style.transform = `translate(-50%, -50%) scaleX(${progress})`;
-            if (progress === 1) {
-               el.current.style.opacity = 0;
+            if (el.current) {
+               el.current.style.transform = `translate(-50%, -50%) scaleX(${progress})`;
+               if (progress === 1) {
+                  el.current.style.opacity = 0;
+               }
             }
          },
       });
