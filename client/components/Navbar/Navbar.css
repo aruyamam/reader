@@ -15,6 +15,20 @@
    text-decoration: none;
 }
 
+.link {
+   padding: 10px 15px;
+   color: #fff;
+   border-radius: 4px;
+   font-size: 0.85rem;
+   text-decoration: none;
+   transition: background-color 0.2s ease-out;
+}
+
+.link:hover,
+.link:focus {
+   background-color: #29292914;
+}
+
 /* .title:focus,
 .login:focus,
 .logout:focus,

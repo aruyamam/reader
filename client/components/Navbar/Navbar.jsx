@@ -40,11 +40,11 @@ const Navbar = ({
                </AppbarBtn>
             ) : (
                <Fragment>
-                  <Link to="/login" className={classes.login}>
-                     <AppbarBtn>ログイン</AppbarBtn>
+                  <Link to="/login" className={classes.link}>
+                     ログイン
                   </Link>
-                  <Link to="/register" className={classes.register}>
-                     <AppbarBtn>登録</AppbarBtn>
+                  <Link to="/register" className={classes.link}>
+                     登録
                   </Link>
                </Fragment>
             )}
