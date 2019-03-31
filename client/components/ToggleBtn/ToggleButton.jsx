@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import classes from './ToggleButton.css';
-import animate, { circ } from '../../animation';
+import animate, { circ } from '../../helper/animation';
 
 const ToggleButton = ({ type, handler, style }) => {
    const el = useRef(null);

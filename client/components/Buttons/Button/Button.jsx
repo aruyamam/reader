@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import classes from './Button.css';
+import animate, { circ } from '../../../helper/animation';
 
 const types = {
    button: 'button',
@@ -11,8 +12,10 @@ const types = {
 const Button = ({
    children, fit, label, type, onClick, style,
 }) => {
+   const el = useRef(null);
    const classNames = [classes.btn];
    let btnType = type;
+
    if (!Object.keys(types).includes(type)) {
       btnType = types.button;
    }
@@ -20,10 +23,34 @@ const Button = ({
       classNames.push(classes.fit);
    }
 
+   const animation = () => {
+      el.current.style.opacity = 1;
+      el.current.style.transform = 'translate(-50%, -50%) scaleX(0.0)';
+
+      animate({
+         duration: 400,
+         timing: circ,
+         draw: (progress) => {
+            el.current.style.transform = `translate(-50%, -50%) scaleX(${progress})`;
+            if (progress === 1) {
+               el.current.style.opacity = 0;
+            }
+         },
+      });
+   };
+
+   const handleOnClick = () => {
+      if (onClick) {
+         onClick();
+      }
+      animation();
+   };
+
    return (
       /* eslint react/button-has-type: "off"  */
-      <button className={classNames.join(' ')} onClick={onClick} style={style} type={btnType}>
+      <button className={classNames.join(' ')} onClick={handleOnClick} style={style} type={btnType}>
          {label || children}
+         <span ref={el} className={classes.effect} />
       </button>
    );
 };
