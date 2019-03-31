@@ -1,0 +1,23 @@
+.Navbar {
+   position: fixed;
+   width: 100%;
+   justify-content: space-between;
+   padding: 0.5rem;
+   background-color: #2196f3;
+   color: #fff;
+   box-shadow: 0 2px 5px #0000002e, 0 3px 10px #0000002e;
+   box-sizing: border-box;
+   z-index: 1;
+}
+
+.title {
+   color: inherit;
+   text-decoration: none;
+}
+
+/* .title:focus,
+.login:focus,
+.logout:focus,
+.register:focus {
+   outline: dotted thin #fff;
+} */

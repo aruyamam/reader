@@ -1,0 +1,104 @@
+.ToggleBtn {
+   position: relative;
+   width: 45px;
+   height: 45px;
+   padding: 9px;
+   border: none;
+   border-radius: 50%;
+   outline: none;
+   background-color: transparent;
+   cursor: pointer;
+   transition: all 0.2s ease-out;
+}
+
+.ToggleBtn:hover,
+.ToggleBtn:focus {
+   background-color: #29292914;
+}
+
+/* .ToggleBtn:focus {
+   outline: dotted thin #fff;
+} */
+
+/* .ToggleBtn:active::before {
+   background-color: #fff;
+   transform: translate(-50%, -50%) scale(1.1);
+   opacity: 0;
+} */
+
+.ToggleBtn:active::after {
+   background-color: #fbfafa52;
+   transform: translate(-50%, -50%) scale(1);
+}
+
+.effect {
+   display: block;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   width: 45px;
+   height: 45px;
+   transform: translate(-50%, -50%) scale(0);
+   background-color: #fbfafa52;
+   border-radius: 50%;
+   transition: all 0.3s ease-out;
+}
+
+/* .ToggleBtn::before {
+   content: '';
+   display: block;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%) scale(0.5);
+   width: 45px;
+   height: 45px;
+   background: transparent;
+   border-radius: 50%;
+   transition: all 0.25s ease-out;
+} */
+
+.ToggleBtn::after {
+   content: '';
+   display: block;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%) scale(0.5);
+   width: 45px;
+   height: 45px;
+   background: transparent;
+   border-radius: 50%;
+   transition: all 0.2s cubic-bezier(1, 0, 0, 1);
+}
+
+.ToggleBtn__bar {
+   position: relative;
+   left: 50%;
+   transform: translateX(-50%);
+   display: block;
+   width: 65%;
+   height: 2px;
+   background: #fff;
+   box-shadow: 1px 1px 2px #0000005e;
+}
+
+.ToggleBtn__bar:after {
+   position: relative;
+   top: 2.5px;
+   content: '';
+   display: block;
+   height: 2px;
+   background: #fff;
+   box-shadow: 1px 1px 2px #0000005e;
+}
+
+.ToggleBtn__bar::before {
+   position: relative;
+   top: -5px;
+   content: '';
+   display: block;
+   height: 2px;
+   background: #fff;
+   box-shadow: 1px 1px 2px #0000005e;
+}

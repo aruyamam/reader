@@ -1,5 +1,5 @@
-export default () =>
-   `<!DOCTYPE html>
+export default () => `
+<!DOCTYPE html>
    <html lang="ja">
    <head>
       <meta charset="UTF-8"/>

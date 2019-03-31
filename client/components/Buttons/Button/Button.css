@@ -1,0 +1,18 @@
+.btn {
+   padding: 10px 15px;
+   background: #2196F3;
+   color: white;
+   box-shadow: 0px 0.5px 4px #0a0a0a33, 0px 1px 7px #a4a4a77d;
+   border: none;
+   border-radius: 3px;
+   cursor: pointer;
+   transition: background-color .2s ease-in;
+}
+
+.btn:hover {
+   background-color: #0069c0;
+}
+
+.fit {
+   width: 100%;
+}

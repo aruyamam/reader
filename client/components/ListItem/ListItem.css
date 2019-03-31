@@ -1,0 +1,28 @@
+.ListItem{
+   margin-top: 1px;
+   color: inherit;
+   word-break: break-all;
+   cursor: pointer;
+}
+
+.ListItem a {
+   display: block;
+   padding: 8px 20px;
+   color: inherit;
+   text-decoration: none;
+}
+
+.ListItem:hover {
+   background-color: #dcdcdc;
+}
+
+.active {
+   background-color: #dcdcdc;
+}
+
+.link {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   font-size: 0.9rem;
+}

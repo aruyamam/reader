@@ -1,0 +1,16 @@
+.Typography {
+   margin: 0;
+   padding: 0;
+}
+
+.left {
+   text-align: left;
+}
+
+.right {
+   text-align: right;
+}
+
+.center {
+   text-align: center;
+}
