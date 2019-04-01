@@ -32,7 +32,7 @@ Grid.defaultProps = {
 
 Grid.propTypes = {
    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.element),
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.bool, PropTypes.element])),
       PropTypes.string,
       PropTypes.element,
    ]).isRequired,
