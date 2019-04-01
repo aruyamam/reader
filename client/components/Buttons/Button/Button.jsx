@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import classes from './Button.css';
 import animate, { circ } from '../../../helper/animation';
+import ClassList from '../../../helper/List';
 
 const types = {
    button: 'button',
@@ -10,17 +11,20 @@ const types = {
 };
 
 const Button = ({
-   children, fit, label, type, onClick, style,
+   className, children, fit, label, type, onClick, style,
 }) => {
    const el = useRef(null);
-   const classNames = [classes.btn];
+   const classList = new ClassList(classes.btn);
    let btnType = type;
 
    if (!Object.keys(types).includes(type)) {
       btnType = types.button;
    }
    if (fit) {
-      classNames.push(classes.fit);
+      classList.add(classes.fit);
+   }
+   if (className) {
+      classList.add(className);
    }
 
    const animation = () => {
@@ -50,7 +54,7 @@ const Button = ({
 
    return (
       /* eslint react/button-has-type: "off"  */
-      <button className={classNames.join(' ')} onClick={handleOnClick} style={style} type={btnType}>
+      <button className={classList.strList} onClick={handleOnClick} style={style} type={btnType}>
          {label || children}
          <span ref={el} className={classes.effect} />
       </button>

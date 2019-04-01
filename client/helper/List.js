@@ -19,7 +19,7 @@ class List {
       this._list.set(this, list);
    }
 
-   get classList() {
+   get strList() {
       return this._list.get(this).join(' ');
    }
 

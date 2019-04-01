@@ -19,7 +19,7 @@ const SideDrawer = ({
    }
 
    return (
-      <div className={classList.classList} style={{ ...style, width }}>
+      <div className={classList.strList} style={{ ...style, width }}>
          <div className={classes.holder}>
             <div className={classes.tab}>
                <List>

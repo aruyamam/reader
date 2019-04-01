@@ -21,17 +21,9 @@ const Navbar = ({
    return (
       <Grid classes={classes.Navbar} container style={{ alignItems: 'center' }}>
          <Grid container style={{ alignItems: 'center' }}>
-            <ToggleButton
-               type="button"
-               handler={handleDrawer}
-               label="btn"
-               style={{ marginRight: '1rem' }}
-            />
-            <Typography style={{ fontSize: '1rem' }} as="h1">
-               <Link to="/reader" className={classes.title}>
-                  {' '}
-                  Reader
-               </Link>
+            <ToggleButton type="button" handler={handleDrawer} label="btn" />
+            <Typography className={classes.title} as="h1">
+               <Link to="/reader"> Reader</Link>
             </Typography>
          </Grid>
          <div>
@@ -59,6 +51,7 @@ const actions = {
 };
 
 Navbar.propTypes = {
+   closeDrawer: PropTypes.func.isRequired,
    history: PropTypes.shape({
       push: PropTypes.func.isRequired,
    }).isRequired,

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Card from '../Card/Card';
-import Form from '../Form/Form';
-import Typography from '../Typography/Typography';
-import Button from '../Buttons/Button/Button';
-import { loginUser } from '../../store/actions/authAction';
+import Card from '../../Card/Card';
+import Form from '../../Form/Form';
+import Typography from '../../Typography/Typography';
+import Button from '../../Buttons/Button/Button';
+import { loginUser } from '../../../store/actions/authAction';
+import classes from './Login.css';
 
 class Register extends Component {
    state = {
@@ -30,7 +31,7 @@ class Register extends Component {
       const { email, password } = this.state;
 
       return (
-         <Card>
+         <Card className={classes.login}>
             <Typography as="h1" align="center">
                ログイン
             </Typography>
@@ -48,7 +49,7 @@ class Register extends Component {
                   type="password"
                   value={password}
                />
-               <Button fit type="submit">
+               <Button className={classes.btn} fit type="submit">
                   ログイン
                </Button>
             </Form>
