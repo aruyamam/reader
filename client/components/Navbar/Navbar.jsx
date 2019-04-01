@@ -21,7 +21,9 @@ const Navbar = ({
    return (
       <Grid classes={classes.Navbar} container style={{ alignItems: 'center' }}>
          <Grid container style={{ alignItems: 'center' }}>
-            <ToggleButton type="button" handler={handleDrawer} label="btn" />
+            {user.isAuthenticated && (
+               <ToggleButton type="button" handler={handleDrawer} label="btn" />
+            )}
             <Typography className={classes.title} as="h1">
                <Link to="/reader"> Reader</Link>
             </Typography>
