@@ -19,7 +19,7 @@ const Navbar = ({
    };
 
    return (
-      <Grid classes={classes.Navbar} container style={{ alignItems: 'center' }}>
+      <Grid className={classes.Navbar} container style={{ alignItems: 'center' }}>
          <Grid container style={{ alignItems: 'center' }}>
             {user.isAuthenticated && (
                <ToggleButton type="button" handler={handleDrawer} label="btn" />

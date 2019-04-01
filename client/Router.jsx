@@ -54,7 +54,7 @@ class Router extends Component {
                         handleDrawer={this.handleDrawer}
                         user={user}
                      />
-                     <Grid classes={classes.router} container>
+                     <Grid className={classes.router} container>
                         <SideDrawer
                            className="drawer"
                            open={isDrawerOpen}
