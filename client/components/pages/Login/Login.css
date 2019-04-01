@@ -4,6 +4,10 @@
    padding: 2rem;
 }
 
+.title {
+   margin-bottom: 1.5rem;
+}
+
 .btn {
    margin-top: 1rem;
 }

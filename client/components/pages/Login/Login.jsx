@@ -32,7 +32,7 @@ class Register extends Component {
 
       return (
          <Card className={classes.login}>
-            <Typography as="h1" align="center">
+            <Typography className={classes.title} as="h1" align="center">
                ログイン
             </Typography>
             <Form onSubmit={this.handleSubmit}>

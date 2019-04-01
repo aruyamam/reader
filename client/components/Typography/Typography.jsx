@@ -37,6 +37,7 @@ const Typography = ({
 Typography.defaultProps = {
    as: 'p',
    align: 'left',
+   className: '',
    style: {},
 };
 
@@ -44,6 +45,7 @@ Typography.propTypes = {
    align: PropTypes.string,
    as: PropTypes.string,
    children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+   className: PropTypes.string,
    style: PropTypes.object,
 };
 

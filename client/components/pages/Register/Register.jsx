@@ -112,7 +112,7 @@ class Register extends Component {
 
       return (
          <Card className={classes.register}>
-            <Typography as="h1" align="center">
+            <Typography as="h1" align="center" className={classes.title}>
                会員登録
             </Typography>
             <Form onSubmit={this.handleSubmit}>
