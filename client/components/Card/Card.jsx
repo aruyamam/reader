@@ -15,14 +15,16 @@ const Card = ({ children, className }) => {
 
 Card.defaultProps = {
    children: '',
+   className: '',
 };
 
 Card.propTypes = {
    children: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
-      PropTypes.arrayOf(PropTypes.element),
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.element, PropTypes.bool])),
    ]),
+   className: PropTypes.string,
 };
 
 export default Card;

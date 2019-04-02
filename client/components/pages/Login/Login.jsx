@@ -59,6 +59,7 @@ class Register extends Component {
 }
 
 Register.propTypes = {
+   handleDrawer: PropTypes.func.isRequired,
    history: PropTypes.shape({
       push: PropTypes.func.isRequired,
    }).isRequired,

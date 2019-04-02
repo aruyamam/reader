@@ -1,9 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Card from '../Card/Card';
-import FeedForm from './FeedForm';
+import FeedForm from './FeedForm/FeedForm';
 import { fetchFeeds, setCurrentFeed } from '../../store/actions/feedAction';
 
 class Home extends Component {
@@ -23,17 +22,7 @@ class Home extends Component {
          return <Redirect to="/login" />;
       }
 
-      return (
-         <Fragment>
-            {user.isAuthenticated ? (
-               <Card>
-                  <FeedForm history={history} userId={user._id} />
-               </Card>
-            ) : (
-               <Card>Home</Card>
-            )}
-         </Fragment>
-      );
+      return <div>{user.isAuthenticated && <FeedForm history={history} userId={user._id} />}</div>;
    }
 }
 

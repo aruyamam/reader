@@ -1,10 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Typography from '../Typography/Typography';
-import Form from '../Form/Form';
-import Button from '../Buttons/Button/Button';
-import { fetchFeeds, subscribeFeed } from '../../store/actions/feedAction';
+import Typography from '../../Typography/Typography';
+import Form from '../../Form/Form';
+import Button from '../../Buttons/Button/Button';
+import { fetchFeeds, subscribeFeed } from '../../../store/actions/feedAction';
+import classes from './FeedForm.css';
+import Card from '../../Card/Card';
 
 const FeedForm = ({
    fetchFeeds, history, userId, subscribeFeed,
@@ -24,8 +26,8 @@ const FeedForm = ({
    };
 
    return (
-      <Fragment>
-         <Typography as="h1" align="center">
+      <Card className={classes.feedForm}>
+         <Typography as="h1" align="center" className={classes.title}>
             URL登録
          </Typography>
          <Form onSubmit={handleOnSubmit}>
@@ -35,11 +37,11 @@ const FeedForm = ({
                value={feedUrl}
                onChange={handleOnChange}
             />
-            <Button type="submit" fit>
+            <Button className={classes.btn} type="submit" fit>
                登録
             </Button>
          </Form>
-      </Fragment>
+      </Card>
    );
 };
 
