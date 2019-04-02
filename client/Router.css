@@ -3,3 +3,8 @@
    padding-top: 61px;
    /* overflow-y: auto; */
 }
+
+.mainContent {
+   max-width: 100%;
+   overflow-x: auto;
+}

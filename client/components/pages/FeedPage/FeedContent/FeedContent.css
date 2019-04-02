@@ -12,15 +12,31 @@
 
 .feedContent {
    margin-top: 1rem;
+   padding: 1rem 2rem;
 }
 
 .feedContent p {
    line-height: 1.7;
 }
 
+.feedContent h1,
+.feedContent h2,
+.feedContent h3,
+.feedContent h4,
+.feedContent h5,
+.feedContent h6 {
+   margin-top: 2rem;
+}
+
 .feedContent p,
-.feedContent pre {
+.feedContent pre,
+.feedContent ul {
    margin-top: 1rem;
+}
+
+.feedContent ol,
+.feedContent ul {
+   list-style-position: inside;
 }
 
 .feedContent img {

@@ -70,9 +70,9 @@ class Router extends Component {
                            style={{ maxWidth: '100%', overflowX: 'hidden' }}
                         > */}
                         <Grid
+                           className={classes.mainContent}
                            xs={12}
                            style={{
-                              maxWidth: '100%',
                               marginLeft: isDrawerOpen ? '268px' : '0',
                            }}
                         >
