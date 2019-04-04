@@ -36,6 +36,7 @@ const subscribeFeed = async (req, res) => {
    feed = new Feed({
       title: feed.title,
       link: feed.link,
+      feedUrl,
       description: feed.description,
       icon: feed.image ? feed.image.link : '',
    });
@@ -60,7 +61,7 @@ const readArticle = async (req, res) => {
    const { feedId } = req.params;
    const { articleId, isRead } = req.body;
 
-   console.log(feedId, articleId, isRead);
+   // console.log(feedId, articleId, isRead);
 
    const article = await Article.findOneAndUpdate(
       {
@@ -78,20 +79,36 @@ const readArticle = async (req, res) => {
 };
 
 const updateFeed = async (req, res) => {
-   console.log('update');
    const rssParser = new RSSParser();
-   const { feedUrl, feedId, userId } = req.body;
-   console.log(feedId);
+   const { feedId } = req.body;
 
-   const feed = await Feed.find({ _id: feedId });
+   const feed = await Feed.findById(feedId);
 
-   const newFeed = await rssParser.parseURL(feedUrl);
+   const newFeed = await rssParser.parseURL(feed.feedUrl);
    if (newFeed.errno) {
       return res.json({ error: newFeed.errno });
    }
    const { items } = newFeed;
 
-   return res.status(200).json(feed);
+   const articles = await Article.find({
+      feedname: Types.ObjectId(feedId),
+   }).exec();
+
+   items
+      .sort((a, b) => (new Date(a.pubDate) > new Date(b.pubDate) ? 1 : -1))
+      .forEach((item) => {
+         if (new Date(item.pubDate) > new Date(feed.updated)) {
+            articles[0].articles.unshift(item);
+         }
+      });
+
+   await Feed.findByIdAndUpdate(feedId, { updated: Date.now() });
+   const newArticles = await Article.findOneAndUpdate(
+      { _id: articles[0]._id },
+      { articles: articles[0].articles },
+   );
+
+   return res.status(200).json(articles[0].articles);
 };
 
 export default {

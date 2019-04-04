@@ -4,12 +4,22 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import List from '../List/List';
 import ClassList from '../../helper/List';
+import { compareToToday } from '../../helper/date';
+import { updateFeed } from '../../store/actions/feedAction';
 import classes from './SideDrawer.css';
 
 const SideDrawer = ({
-   currentFeed, feeds, open, style, user, width,
+   currentFeed, feeds, open, style, updateFeed, user, width,
 }) => {
+   const handleOnClick = async (feed) => {
+      if (!compareToToday(feed.updated)) {
+         console.log(feed.updated);
+         await updateFeed(user._id, feed._id);
+      }
+   };
+
    const classList = new ClassList(classes.drawer);
+   // console.log(feeds);
 
    if (open) {
       classList.add(classes.open);
@@ -25,6 +35,7 @@ const SideDrawer = ({
                <List>
                   {feeds.map(feed => (
                      <List.Item
+                        onClick={() => handleOnClick(feed)}
                         active={feed._id === currentFeed}
                         key={feed._id}
                         link={`/reader/${feed._id}`}
@@ -50,6 +61,10 @@ const mapStates = state => ({
    feeds: state.feed.feeds.map(feed => ({ ...feed.feed })),
 });
 
+const actions = {
+   updateFeed,
+};
+
 SideDrawer.propTypes = {
    currentFeed: PropTypes.string.isRequired,
    feeds: PropTypes.arrayOf(
@@ -65,4 +80,9 @@ SideDrawer.propTypes = {
    width: PropTypes.string.isRequired,
 };
 
-export default withRouter(connect(mapStates)(SideDrawer));
+export default withRouter(
+   connect(
+      mapStates,
+      actions,
+   )(SideDrawer),
+);

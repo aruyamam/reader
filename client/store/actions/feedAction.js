@@ -27,9 +27,15 @@ export const subscribeFeed = (feedUrl, userId) => async () => {
 
 export const fetchFeeds = userId => async (dispatch) => {
    await axios.get(`/api/feeds/${userId}`).then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch(setFeeds(res.data));
    });
+};
+
+export const updateFeed = (userId, feedId) => async (dispatch) => {
+   const res = await axios.post(`/api/feeds/${userId}`, { feedId });
+   console.log(res.data);
+   dispatch(setAritcles(res.data));
 };
 
 export const fetchArticles = feedId => async (dispach) => {
