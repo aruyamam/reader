@@ -10,6 +10,8 @@ import Home from './components/pages/Home';
 import Register from './components/pages/Register/Register';
 import Login from './components/pages/Login/Login';
 import FeedPage from './components/pages/FeedPage/FeedPage';
+import Modal from './components/hoc/Modal/Modal';
+import Loading from './components/pages/Loading/Loading';
 import PrivateRoute from './components/hoc/PrivateRoute';
 import { fetchFeeds } from './store/actions/feedAction';
 import classes from './Router.css';
@@ -49,6 +51,9 @@ class Router extends Component {
                path="/(.+)"
                render={() => (
                   <Fragment>
+                     <Modal>
+                        <Loading />
+                     </Modal>
                      <Navbar
                         closeDrawer={this.closeDrawer}
                         handleDrawer={this.handleDrawer}

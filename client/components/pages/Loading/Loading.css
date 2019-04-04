@@ -1,0 +1,24 @@
+.loading {
+   width: 120px;
+   height: 120px;
+   border: 10px solid transparent;
+   border-top: 8px solid #03A9F4;
+   border-right: 8px solid #03a9f4;
+   border-bottom: 8px solid #03a9f4;
+   border-radius: 50%;
+   animation: cycling 0.8s linear infinite;
+}
+
+@keyframes cycling {
+   0% {
+      transform: rotate(0deg);
+   }
+
+   50% {
+      transform: rotate(180deg);
+   }
+
+   100% {
+      transform: rotate(360deg);
+   }
+}
