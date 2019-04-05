@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchArticles, readArticle } from '../../../store/actions/feedAction';
 import FeedContent from './FeedContent/FeedContent';
+import Loading from '../Loading/Loading';
+import classes from './FeedPage.css';
 
 class FeedPage extends Component {
    componentDidMount() {
@@ -18,19 +20,29 @@ class FeedPage extends Component {
    }
 
    render() {
-      const { articles, match, readArticle } = this.props;
+      const {
+         articles, loading, match, readArticle,
+      } = this.props;
 
       return (
          <Fragment>
-            {articles.map((article, i) => (
-               <FeedContent
-                  key={article._id}
-                  article={article}
-                  match={match}
-                  readArticle={readArticle}
-                  tabIndex={i}
-               />
-            ))}
+            {loading ? (
+               <div className={classes.loader}>
+                  <div className={classes.loaderInner}>
+                     <Loading />
+                  </div>
+               </div>
+            ) : (
+               articles.map((article, i) => (
+                  <FeedContent
+                     key={article._id}
+                     article={article}
+                     match={match}
+                     readArticle={readArticle}
+                     tabIndex={i}
+                  />
+               ))
+            )}
          </Fragment>
       );
    }
@@ -43,11 +55,13 @@ const actions = {
 
 const mapStates = state => ({
    articles: state.feed.articles,
+   loading: state.async.loading,
 });
 
 FeedPage.propTypes = {
    articles: PropTypes.arrayOf(PropTypes.object).isRequired,
    fetchArticles: PropTypes.func.isRequired,
+   loading: PropTypes.bool.isRequired,
    match: PropTypes.shape({
       params: PropTypes.shape({
          feedId: PropTypes.string,

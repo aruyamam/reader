@@ -10,8 +10,6 @@ import Home from './components/pages/Home';
 import Register from './components/pages/Register/Register';
 import Login from './components/pages/Login/Login';
 import FeedPage from './components/pages/FeedPage/FeedPage';
-import Modal from './components/hoc/Modal/Modal';
-import Loading from './components/pages/Loading/Loading';
 import PrivateRoute from './components/hoc/PrivateRoute';
 import { fetchFeeds } from './store/actions/feedAction';
 import classes from './Router.css';
@@ -40,7 +38,7 @@ class Router extends Component {
 
    render() {
       const { isDrawerOpen } = this.state;
-      const { loading, user } = this.props;
+      const { user } = this.props;
 
       return (
          <Fragment>
@@ -51,9 +49,6 @@ class Router extends Component {
                path="/(.+)"
                render={() => (
                   <Fragment>
-                     <Modal open={loading}>
-                        <Loading />
-                     </Modal>
                      <Navbar
                         closeDrawer={this.closeDrawer}
                         handleDrawer={this.handleDrawer}
@@ -109,11 +104,9 @@ const actions = {
 
 const mapStates = state => ({
    user: state.auth.user,
-   loading: state.async.loading,
 });
 
 Router.propTypes = {
-   loading: PropTypes.bool.isRequired,
    fetchFeeds: PropTypes.func.isRequired,
    user: PropTypes.shape({
       _id: PropTypes.string,
