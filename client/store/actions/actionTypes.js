@@ -8,8 +8,8 @@ export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const REMOVE_CURRENT_USER = 'REMOVE_CURRENT_USER';
 
 // Error
-export const SET_ERRORS = 'SET_ERRORS';
-export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const SET_ERROR = 'SET_ERRORS';
+export const CLEAR_ERROR = 'CLEAR_ERRORS';
 
 // Feed
 export const SUBSCRIBE_FEED = 'SUBSCRIBE_FEED';

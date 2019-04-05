@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SET_ARTICLES, SET_CURRENT_FEED, SET_FEEDS } from './actionTypes';
 import { asyncActionStart, asyncActionEnd } from './asyncAction';
+import { setError, clearError } from './errorAction';
 
 export const setFeeds = feeds => ({
    type: SET_FEEDS,
@@ -17,43 +18,84 @@ const setAritcles = articles => ({
    articles,
 });
 
-export const subscribeFeed = (feedUrl, userId) => async () => {
-   const feed = await axios.post('/api/feeds', {
-      feedUrl,
-      userId,
-   });
+export const subscribeFeed = (feedUrl, userId) => async (dispatch) => {
+   try {
+      dispatch(asyncActionStart());
+      const feed = await axios.post('/api/feeds', {
+         feedUrl,
+         userId,
+      });
+      dispatch(clearError());
+      dispatch(asyncActionEnd());
 
-   return feed.data;
+      return feed.data;
+   }
+   catch (err) {
+      console.log(err);
+      dispatch(asyncActionEnd());
+      dispatch(setError(err.message));
+   }
 };
 
 export const fetchFeeds = userId => async (dispatch) => {
-   await axios.get(`/api/feeds/${userId}`).then((res) => {
-      // console.log(res);
+   try {
+      dispatch(asyncActionStart());
+      const res = await axios.get(`/api/feeds/${userId}`);
       dispatch(setFeeds(res.data));
-   });
+      dispatch(clearError());
+      dispatch(asyncActionEnd());
+   }
+   catch (err) {
+      console.log(err);
+      dispatch(asyncActionEnd());
+      dispatch(setError(err.message));
+   }
 };
 
 export const updateFeed = (userId, feedId) => async (dispatch) => {
-   dispatch(asyncActionStart());
-   const res = await axios.post(`/api/feeds/${userId}`, { feedId });
-   console.log(res.data);
-   dispatch(setAritcles(res.data));
-   dispatch(asyncActionEnd());
+   try {
+      dispatch(asyncActionStart());
+      const res = await axios.post(`/api/feeds/${userId}`, { feedId });
+      dispatch(setAritcles(res.data));
+      dispatch(clearError());
+      dispatch(asyncActionEnd());
+   }
+   catch (err) {
+      console.log(err);
+      dispatch(asyncActionEnd());
+      dispatch(setError(err.message));
+   }
 };
 
-export const fetchArticles = feedId => async (dispach) => {
-   const results = await axios.get(`/api/feeds/articles/${feedId}`);
-   // console.log(results);
-   await dispach(setAritcles(results.data));
-   dispach(setCurrentFeed(feedId));
+export const fetchArticles = feedId => async (dispatch) => {
+   try {
+      dispatch(asyncActionStart());
+      const results = await axios.get(`/api/feeds/articles/${feedId}`);
+      // console.log(results);
+      await dispatch(setAritcles(results.data));
+      dispatch(setCurrentFeed(feedId));
+      dispatch(clearError());
+      dispatch(asyncActionEnd());
+   }
+   catch (err) {
+      console.log(err);
+      dispatch(asyncActionEnd());
+      dispatch(setError(err.message));
+   }
 };
 
 export const readArticle = (feedId, article) => async (dispatch) => {
    if (!article.isRead) {
-      await axios.post(`/api/feeds/articles/${feedId}`, {
-         articleId: article._id,
-         isRead: true,
-      });
-      dispatch(fetchArticles(feedId));
+      try {
+         await axios.post(`/api/feeds/articles/${feedId}`, {
+            articleId: article._id,
+            isRead: true,
+         });
+         dispatch(clearError());
+         dispatch(fetchArticles(feedId));
+      }
+      catch (err) {
+         console.log(err);
+      }
    }
 };

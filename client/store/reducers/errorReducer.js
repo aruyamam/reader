@@ -1,14 +1,19 @@
-import { SET_ERRORS } from '../actions/actionTypes';
+import { CLEAR_ERROR, SET_ERROR } from '../actions/actionTypes';
 
 const initialState = {
-   error: {},
+   message: '',
 };
 
 const errorReducer = (state = initialState, action) => {
    switch (action.type) {
-      case SET_ERRORS:
+      case SET_ERROR:
          return {
-            error: action.error,
+            message: action.error,
+         };
+
+      case CLEAR_ERROR:
+         return {
+            message: '',
          };
 
       default:

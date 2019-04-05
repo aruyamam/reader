@@ -1,8 +1,10 @@
-import { SET_ERRORS } from './actionTypes';
+import { CLEAR_ERROR, SET_ERROR } from './actionTypes';
 
 export const setError = error => ({
-   type: SET_ERRORS,
+   type: SET_ERROR,
    error,
 });
 
-export const clearError = () => {};
+export const clearError = () => ({
+   type: CLEAR_ERROR,
+});

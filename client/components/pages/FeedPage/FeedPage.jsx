@@ -5,6 +5,7 @@ import { fetchArticles, readArticle } from '../../../store/actions/feedAction';
 import FeedContent from './FeedContent/FeedContent';
 import Loading from '../Loading/Loading';
 import classes from './FeedPage.css';
+import isEmpty from '../../../helper/helper';
 
 class FeedPage extends Component {
    componentDidMount() {
@@ -21,8 +22,9 @@ class FeedPage extends Component {
 
    render() {
       const {
-         articles, loading, match, readArticle,
+         articles, error, loading, match, readArticle,
       } = this.props;
+      console.log(error);
 
       return (
          <Fragment>
@@ -33,15 +35,21 @@ class FeedPage extends Component {
                   </div>
                </div>
             ) : (
-               articles.map((article, i) => (
-                  <FeedContent
-                     key={article._id}
-                     article={article}
-                     match={match}
-                     readArticle={readArticle}
-                     tabIndex={i}
-                  />
-               ))
+               <Fragment>
+                  {error ? (
+                     <div>{error}</div>
+                  ) : (
+                     articles.map((article, i) => (
+                        <FeedContent
+                           key={article._id}
+                           article={article}
+                           match={match}
+                           readArticle={readArticle}
+                           tabIndex={i}
+                        />
+                     ))
+                  )}
+               </Fragment>
             )}
          </Fragment>
       );
@@ -55,6 +63,7 @@ const actions = {
 
 const mapStates = state => ({
    articles: state.feed.articles,
+   error: state.error.message,
    loading: state.async.loading,
 });
 
