@@ -40,7 +40,7 @@ class Router extends Component {
 
    render() {
       const { isDrawerOpen } = this.state;
-      const { user } = this.props;
+      const { loading, user } = this.props;
 
       return (
          <Fragment>
@@ -51,7 +51,7 @@ class Router extends Component {
                path="/(.+)"
                render={() => (
                   <Fragment>
-                     <Modal>
+                     <Modal open={loading}>
                         <Loading />
                      </Modal>
                      <Navbar
@@ -109,9 +109,11 @@ const actions = {
 
 const mapStates = state => ({
    user: state.auth.user,
+   loading: state.async.loading,
 });
 
 Router.propTypes = {
+   loading: PropTypes.bool.isRequired,
    fetchFeeds: PropTypes.func.isRequired,
    user: PropTypes.shape({
       _id: PropTypes.string,

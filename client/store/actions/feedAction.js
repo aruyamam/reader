@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SET_ARTICLES, SET_CURRENT_FEED, SET_FEEDS } from './actionTypes';
+import { asyncActionStart, asyncActionEnd } from './asyncAction';
 
 export const setFeeds = feeds => ({
    type: SET_FEEDS,
@@ -33,9 +34,11 @@ export const fetchFeeds = userId => async (dispatch) => {
 };
 
 export const updateFeed = (userId, feedId) => async (dispatch) => {
+   dispatch(asyncActionStart());
    const res = await axios.post(`/api/feeds/${userId}`, { feedId });
    console.log(res.data);
    dispatch(setAritcles(res.data));
+   dispatch(asyncActionEnd());
 };
 
 export const fetchArticles = feedId => async (dispach) => {
