@@ -10,3 +10,8 @@
    transform: translate(-50%, -50%);
    display: inline-block;
 }
+
+.error {
+   padding: 1rem;
+   color: #f00;
+}

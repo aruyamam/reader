@@ -37,7 +37,7 @@ class FeedPage extends Component {
             ) : (
                <Fragment>
                   {error ? (
-                     <div>{error}</div>
+                     <div className={classes.error}>{error}</div>
                   ) : (
                      articles.map((article, i) => (
                         <FeedContent
