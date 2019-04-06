@@ -5,7 +5,6 @@ import { fetchArticles, readArticle } from '../../../store/actions/feedAction';
 import FeedContent from './FeedContent/FeedContent';
 import Loading from '../Loading/Loading';
 import classes from './FeedPage.css';
-import isEmpty from '../../../helper/helper';
 
 class FeedPage extends Component {
    componentDidMount() {
@@ -24,7 +23,6 @@ class FeedPage extends Component {
       const {
          articles, error, loading, match, readArticle,
       } = this.props;
-      console.log(error);
 
       return (
          <Fragment>
@@ -69,6 +67,7 @@ const mapStates = state => ({
 
 FeedPage.propTypes = {
    articles: PropTypes.arrayOf(PropTypes.object).isRequired,
+   error: PropTypes.string.isRequired,
    fetchArticles: PropTypes.func.isRequired,
    loading: PropTypes.bool.isRequired,
    match: PropTypes.shape({

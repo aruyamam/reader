@@ -78,7 +78,7 @@ class Router extends Component {
                         >
                            <Switch>
                               <Route exact path="/reader" component={Home} />
-                              <Route path="/reader/:feedId" component={FeedPage} />
+                              <PrivateRoute path="/reader/:feedId" component={FeedPage} />
                               <Route path="/register" component={Register} />
                               <Route
                                  path="/login"
