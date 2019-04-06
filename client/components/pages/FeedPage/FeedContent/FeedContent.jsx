@@ -30,7 +30,7 @@ const FeedContent = ({
    };
 
    return (
-      <Card>
+      <Card className={classes.feedPage}>
          <div
             onClick={handleOnClick}
             onKeyUp={handleOnClick}
@@ -91,6 +91,7 @@ FeedContent.propTypes = {
       }).isRequired,
    }).isRequired,
    readArticle: PropTypes.func.isRequired,
+   tabIndex: PropTypes.number.isRequired,
 };
 
 export default FeedContent;
