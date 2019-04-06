@@ -91,8 +91,11 @@ export const readArticle = (feedId, article) => async (dispatch) => {
             articleId: article._id,
             isRead: true,
          });
+         const results = await axios.get(`/api/feeds/articles/${feedId}`);
+         await dispatch(setAritcles(results.data));
+         dispatch(setCurrentFeed(feedId));
          dispatch(clearError());
-         dispatch(fetchArticles(feedId));
+         // dispatch(fetchArticles(feedId));
       }
       catch (err) {
          console.log(err);
