@@ -57,6 +57,19 @@
    overflow: hidden;
 }
 
+.title {
+   flex: 0 0 auto;
+   font-size: 1rem;
+   overflow: hidden
+}
+
+.excerpt {
+   flex: 1 1 60%;
+   margin: 0 1rem;
+   overflow: hidden;
+   opacity: 0.8;
+}
+
 .headerRight {
    width: 25px;
    flex-shrink: 0;

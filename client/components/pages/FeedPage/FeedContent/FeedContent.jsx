@@ -33,15 +33,22 @@ const FeedContent = ({
       <Card>
          <div
             onClick={handleOnClick}
+            onKeyUp={handleOnClick}
             className={classes.header}
             role="button"
-            style={{ opacity: article.isRead ? '.5' : '1' }}
             tabIndex={tabIndex}
          >
             <div className={classes.headerLeft}>
-               <Typography as="h2" style={{ fontSize: '1rem', overflow: 'hidden' }}>
+               <Typography
+                  className={classes.title}
+                  as="h2"
+                  style={{ opacity: article.isRead ? '.5' : '1' }}
+               >
                   {article.title}
                </Typography>
+               {article.contentSnippet && (
+                  <p className={classes.excerpt}>{article.contentSnippet.substr(0, 150)}</p>
+               )}
                <p className={classes.date}>
                   {new Date(article.pubDate).toLocaleDateString('ja-JP', {
                      year: 'numeric',
