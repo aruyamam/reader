@@ -1,6 +1,6 @@
 .drawer {
    position: absolute;
-   left: -250px;
+   left: -268px;
    flex-shrink: 0;
    overflow-y: auto;
    transition: left .3s ease-out;
