@@ -7,10 +7,12 @@ import Router from './Router';
 import configureStore from './store';
 import ScrollToTop from './components/ScrollToTop';
 import { setCurrentUser } from './store/actions/authAction';
+import setAuthToken from './helper/setAuthToken';
 
 const store = configureStore();
 
 if (localStorage.jwt) {
+   setAuthToken(localStorage.jwt);
    const user = jwtDecode(localStorage.getItem('jwt'));
    store.dispatch(setCurrentUser(user));
 }

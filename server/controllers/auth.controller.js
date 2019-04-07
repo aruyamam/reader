@@ -23,7 +23,7 @@ const register = async (req, res) => {
 
    return res
       .status(200)
-      .header('X-Auth-Token', token)
+      .header('x-auth-token', token)
       .json({
          _id: user._id,
          username: user.username,

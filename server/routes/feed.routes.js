@@ -1,5 +1,6 @@
 import express from 'express';
 import feedCtrl from '../controllers/feed.controller';
+import auth from '../middleware/auth';
 
 const router = express.Router();
 
@@ -8,12 +9,12 @@ router.route('/').post(feedCtrl.subscribeFeed);
 
 router
    .route('/:userId')
-   .get(feedCtrl.fetchFeeds)
-   .post(feedCtrl.updateFeed);
+   .get(auth, feedCtrl.fetchFeeds)
+   .post(auth, feedCtrl.updateFeed);
 
 router
    .route('/articles/:feedId')
-   .get(feedCtrl.fetchArticles)
-   .post(feedCtrl.readArticle);
+   .get(auth, feedCtrl.fetchArticles)
+   .post(auth, feedCtrl.readArticle);
 
 export default router;
