@@ -1,13 +1,30 @@
 const required = value => value.trim() !== '';
 
-const minLength = (value, policy) => value.length >= policy;
+const minLength = (value, policy) => {
+   if (value) {
+      return value.length >= policy;
+   }
 
-const maxLength = (value, policy) => value.length <= policy;
+   return true;
+};
 
-const validateEmail = value =>
-   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      value,
-   );
+const maxLength = (value, policy) => {
+   if (value) {
+      return value.length <= policy;
+   }
+
+   return true;
+};
+
+const validateEmail = (value) => {
+   if (value) {
+      return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+         value,
+      );
+   }
+
+   return true;
+};
 
 const funcMap = {
    required,
