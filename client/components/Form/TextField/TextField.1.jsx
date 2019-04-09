@@ -66,7 +66,7 @@ const TextField = ({
                backgroundColor: error ? 'red' : color,
             }}
          />
-         {error && <p className={classes.error}>{`${messages[0]}`}</p>}
+         {error && messages && <p className={classes.error}>{`${messages[0]}`}</p>}
       </div>
    );
 };
