@@ -9,6 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 import Home from './components/pages/Home';
 import Register from './components/pages/Register/Register';
 import Login from './components/pages/Login/Login';
+import RegisterForm from './components/pages/RegisterForm/RegisterForm';
 import FeedPage from './components/pages/FeedPage/FeedPage';
 import PrivateRoute from './components/hoc/PrivateRoute';
 import { fetchFeeds } from './store/actions/feedAction';
@@ -79,11 +80,25 @@ class Router extends Component {
                            <Switch>
                               <Route exact path="/reader" component={Home} />
                               <PrivateRoute path="/reader/:feedId" component={FeedPage} />
-                              <Route path="/register" component={Register} />
+                              <Route
+                                 path="/register"
+                                 render={props => (
+                                    <RegisterForm
+                                       handleDrawer={this.handleDrawer}
+                                       register
+                                       {...props}
+                                    />
+                                 )}
+                              />
                               <Route
                                  path="/login"
                                  render={props => (
-                                    <Login handleDrawer={this.handleDrawer} {...props} />
+                                    <RegisterForm
+                                       handleDrawer={this.handleDrawer}
+                                       label="ログイン"
+                                       btnLabel="ログイン"
+                                       {...props}
+                                    />
                                  )}
                               />
                            </Switch>
