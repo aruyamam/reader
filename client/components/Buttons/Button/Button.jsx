@@ -10,15 +10,25 @@ const types = {
    reset: 'reset',
 };
 
+const sizes = {
+   small: 'small',
+   medium: 'medium',
+   big: 'big',
+};
+
 const Button = ({
-   className, children, fit, label, type, onClick, style,
+   className, children, fit, label, type, onClick, size, style,
 }) => {
    const el = useRef(null);
    const classList = new ClassList(classes.btn);
    let btnType = type;
+   let btnSize = size;
 
    if (!Object.keys(types).includes(type)) {
       btnType = types.button;
+   }
+   if (!Object.keys(sizes).includes(size)) {
+      btnSize = sizes.medium;
    }
    if (fit) {
       classList.add(classes.fit);
@@ -26,6 +36,8 @@ const Button = ({
    if (className) {
       classList.add(className);
    }
+
+   classList.add(classes[btnSize]);
 
    const animation = () => {
       el.current.style.opacity = 1;
@@ -62,8 +74,10 @@ const Button = ({
 };
 
 Button.defaultProps = {
+   className: '',
    fit: false,
    label: '',
+   size: 'medium',
    type: 'button',
    onClick: null,
    style: {},
@@ -71,10 +85,12 @@ Button.defaultProps = {
 
 Button.propTypes = {
    children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+   className: PropTypes.string,
    fit: PropTypes.bool,
    label: PropTypes.string,
    type: PropTypes.string,
    onClick: PropTypes.func,
+   size: PropTypes.string,
    style: PropTypes.object,
 };
 
