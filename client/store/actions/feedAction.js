@@ -67,10 +67,11 @@ export const updateFeed = (userId, feedId) => async (dispatch) => {
    }
 };
 
-export const fetchArticles = feedId => async (dispatch) => {
+export const fetchArticles = feedId => async (dispatch, getState) => {
    try {
+      const { user } = getState().auth;
       dispatch(asyncActionStart());
-      const results = await axios.get(`/api/feeds/articles/${feedId}`);
+      const results = await axios.get(`/api/feeds/${user._id}/${feedId}`);
       // console.log(results);
       await dispatch(setAritcles(results.data));
       dispatch(setCurrentFeed(feedId));
@@ -84,14 +85,15 @@ export const fetchArticles = feedId => async (dispatch) => {
    }
 };
 
-export const readArticle = (feedId, article) => async (dispatch) => {
+export const readArticle = (feedId, article) => async (dispatch, getState) => {
    if (!article.isRead) {
       try {
-         await axios.post(`/api/feeds/articles/${feedId}`, {
+         const { user } = getState().auth;
+         await axios.post(`/api/feeds/${user._id}/${feedId}`, {
             articleId: article._id,
             isRead: true,
          });
-         const results = await axios.get(`/api/feeds/articles/${feedId}`);
+         const results = await axios.get(`/api/feeds/${user._id}/${feedId}`);
          await dispatch(setAritcles(results.data));
          dispatch(setCurrentFeed(feedId));
          dispatch(clearError());

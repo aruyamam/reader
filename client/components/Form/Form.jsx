@@ -17,8 +17,10 @@ Form.defaultProps = {
 };
 
 Form.propTypes = {
-   children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)])
-      .isRequired,
+   children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.element, PropTypes.bool])),
+      PropTypes.element,
+   ]).isRequired,
    onSubmit: PropTypes.func,
 };
 

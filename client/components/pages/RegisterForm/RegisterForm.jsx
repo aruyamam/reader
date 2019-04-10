@@ -66,7 +66,7 @@ class RegisterForm extends Component {
             }));
          }
 
-         if (formIsValid) {
+         if (name !== 'formIsValid' && this.state[name].value && formIsValid) {
             user[name] = this.state[name].value;
          }
       });
@@ -93,6 +93,7 @@ class RegisterForm extends Component {
 
    handleValidation(event) {
       const { email, password, username } = this.state;
+      const { register } = this.props;
       const { name, value } = event.target;
       const properties = { ...this.state[name] };
       const { rules } = properties;
@@ -100,7 +101,9 @@ class RegisterForm extends Component {
       const errors = validate(name, value, rules);
 
       this.setState(prevSate => ({
-         formIsValid: email.isValid && password.isValid && (username && username.isValid),
+         formIsValid: register
+            ? email.isValid && password.isValid && username.isValid
+            : email.isValid && password.isValid,
          [name]: {
             ...prevSate[name],
             value,

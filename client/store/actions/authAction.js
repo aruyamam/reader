@@ -10,20 +10,21 @@ export const setCurrentUser = user => ({
 });
 
 export const registerUser = user => async (dispatch) => {
-   axios
-      .post('/api/auth/register', user)
-      .then((res) => {
-         // console.log(res);
-         dispatch(setCurrentUser(res.data));
+   const response = await axios.post('/api/auth/register', user);
+   // .then((res) => {
+   //    // console.log(res);
 
-         return true;
-      })
-      .catch((error) => {
-         dispatch(setError(error));
-         console.log(error);
+   //    return true;
+   // })
+   // .catch((error) => {
+   //    dispatch(setError(error));
+   //    console.log(error);
 
-         return false;
-      });
+   //    return false;
+   // });
+   dispatch(setCurrentUser(response.data));
+   localStorage.setItem('jwt', response.headers['x-auth-token']);
+   setAuthToken(response.headers['x-auth-token']);
 };
 
 export const loginUser = user => async (dispatch) => {

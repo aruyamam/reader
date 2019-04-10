@@ -22,7 +22,7 @@ const FeedForm = ({
       const feed = await subscribeFeed(feedUrl, userId);
       await fetchFeeds(userId);
       setFeedUrl('');
-      history.push(`/reader/${feed._id}`);
+      history.push(`/reader/${feed._id}/`);
    };
 
    return (

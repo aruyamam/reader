@@ -1,9 +1,13 @@
 import mongoose, { Schema } from 'mongoose';
 
 const ArticleSchema = new Schema({
-   feedname: {
+   feedId: {
       type: Schema.Types.ObjectId,
       ref: 'Feed',
+   },
+   userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
    },
    articles: [
       new Schema({

@@ -17,7 +17,8 @@ const fetchFeeds = async (req, res) => {
 
 const fetchArticles = async (req, res) => {
    const data = await Article.find({
-      feedname: Types.ObjectId(req.params.feedId),
+      feedId: Types.ObjectId(req.params.feedId),
+      userId: Types.ObjectId(req.params.userId),
    }).exec();
 
    return res.status(200).json(data[0].articles);
@@ -31,16 +32,31 @@ const subscribeFeed = async (req, res) => {
    if (feed.errno) {
       return res.json({ error: feed.errno });
    }
+
+   const foundFeed = await Feed.findOne({ link: feed.link });
+
    const { items } = feed;
 
-   feed = new Feed({
-      title: feed.title,
-      link: feed.link,
-      feedUrl,
-      description: feed.description,
-      icon: feed.image ? feed.image.link : '',
+   if (!foundFeed) {
+      feed = new Feed({
+         title: feed.title,
+         link: feed.link,
+         feedUrl,
+         description: feed.description,
+         icon: feed.image ? feed.image.link : '',
+      });
+      feed = await feed.save();
+   }
+   else {
+      feed = foundFeed;
+   }
+
+   const articles = new Article({
+      feedId: feed._id,
+      userId,
+      articles: items,
    });
-   feed = await feed.save();
+   await articles.save();
 
    const subscribe = new Subscribe({
       user: userId,
@@ -48,24 +64,19 @@ const subscribeFeed = async (req, res) => {
    });
    await subscribe.save();
 
-   const articles = new Article({
-      feedname: feed._id,
-      articles: items,
-   });
-   await articles.save();
-
    return res.status(200).json(feed);
 };
 
 const readArticle = async (req, res) => {
-   const { feedId } = req.params;
+   const { feedId, userId } = req.params;
    const { articleId, isRead } = req.body;
 
    // console.log(feedId, articleId, isRead);
 
    const article = await Article.findOneAndUpdate(
       {
-         feedname: feedId,
+         feedId,
+         userId,
          'articles._id': articleId,
       },
       {

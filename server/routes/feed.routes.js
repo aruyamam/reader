@@ -5,7 +5,7 @@ import auth from '../middleware/auth';
 const router = express.Router();
 
 // @/api/feeds/
-router.route('/').post(feedCtrl.subscribeFeed);
+router.route('/').post(auth, feedCtrl.subscribeFeed);
 
 router
    .route('/:userId')
@@ -13,7 +13,7 @@ router
    .post(auth, feedCtrl.updateFeed);
 
 router
-   .route('/articles/:feedId')
+   .route('/:userId/:feedId')
    .get(auth, feedCtrl.fetchArticles)
    .post(auth, feedCtrl.readArticle);
 
