@@ -1,28 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import classes from './ListItem.css';
 
 const ListItem = ({
-   active, children, keys, link, onClick, style,
+   as, active, children, link, onClick, style,
 }) => {
    const classNames = [classes.ListItem];
+   const Element = as;
 
    if (active) {
       classNames.push(classes.active);
    }
 
    return (
-      <li onClick={onClick} className={classNames.join(' ')} key={keys} style={style}>
-         <Link className={classes.link} to={link}>
+      <li onClick={onClick} className={classNames.join(' ')} style={style}>
+         <Element className={classes.link} to={link}>
             {children}
-         </Link>
+         </Element>
       </li>
    );
 };
 
+ListItem.defaultProps = {
+   active: false,
+   as: 'div',
+   link: '',
+   onClick: null,
+};
+
+const {
+   arrayOf, bool, func, node, object, oneOfType, string,
+} = PropTypes;
+
 ListItem.propTypes = {
-   active: PropTypes.bool,
+   active: bool,
+   as: oneOfType([func, string]),
+   children: oneOfType([arrayOf(node), node]).isRequired,
+   link: string,
+   onClick: func,
+   style: object,
 };
 
 export default ListItem;
