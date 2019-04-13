@@ -1,21 +1,28 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Grid from '../Grid/Grid';
 import AppbarBtn from '../Buttons/LoginBtn/AppbarBtn';
 import ToggleButton from '../ToggleBtn/ToggleButton';
 import Typography from '../Typography/Typography';
+import Menu from '../Menu/Menu';
+import Modal from '../Modal/Modal';
 import classes from './Navbar.css';
-import { logoutUser } from '../../store/actions/authAction';
 
-const Navbar = ({
-   closeDrawer, handleDrawer, history, logoutUser, user,
-}) => {
-   const handleLogout = () => {
-      logoutUser(history);
-      closeDrawer();
-      history.push('/login');
+const Navbar = ({ closeDrawer, handleDrawer, user }) => {
+   const [visibility, setVisibility] = useState(false);
+   const [xy, setxy] = useState({ x: 0, y: 0 });
+
+   const handleModal = () => {
+      setVisibility(prevState => !prevState);
+   };
+
+   const handleOnClick = (event) => {
+      const [rect] = event.target.getClientRects();
+      const x = event.clientX || rect.x;
+      const y = event.clientY || rect.y;
+      setxy({ x: x - rect.width, y });
+      handleModal();
    };
 
    return (
@@ -30,7 +37,7 @@ const Navbar = ({
          </Grid>
          <div>
             {user.isAuthenticated ? (
-               <AppbarBtn onClick={handleLogout} className={classes.logout}>
+               <AppbarBtn onClick={handleOnClick} className={classes.logout}>
                   ログアウト
                </AppbarBtn>
             ) : (
@@ -44,29 +51,20 @@ const Navbar = ({
                </Fragment>
             )}
          </div>
+
+         <Modal open={visibility} onClose={handleModal} xy={xy} transparent>
+            <Menu closeDrawer={closeDrawer} onClose={handleModal} />
+         </Modal>
       </Grid>
    );
 };
 
-const actions = {
-   logoutUser,
-};
-
 Navbar.propTypes = {
    closeDrawer: PropTypes.func.isRequired,
-   history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-   }).isRequired,
    handleDrawer: PropTypes.func.isRequired,
-   logoutUser: PropTypes.func.isRequired,
    user: PropTypes.shape({
       isAuthenticated: PropTypes.bool.isRequired,
    }).isRequired,
 };
 
-export default withRouter(
-   connect(
-      null,
-      actions,
-   )(Navbar),
-);
+export default Navbar;

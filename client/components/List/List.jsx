@@ -7,18 +7,27 @@ class List extends Component {
    static Item = ListItem;
 
    render() {
-      const { children } = this.props;
+      const { children, role } = this.props;
 
-      return <ul className={classes.list}>{children}</ul>;
+      return (
+         <ul className={classes.list} role={role}>
+            {children}
+         </ul>
+      );
    }
 }
 
+List.defaultProps = {
+   role: '',
+};
+
+const {
+   arrayOf, element, oneOfType, string,
+} = PropTypes;
+
 List.propTypes = {
-   children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.arrayOf(PropTypes.element),
-      PropTypes.string,
-   ]).isRequired,
+   children: oneOfType([arrayOf(string), arrayOf(element), string]).isRequired,
+   role: string,
 };
 
 export default List;

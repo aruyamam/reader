@@ -12,8 +12,10 @@
    text-decoration: none;
 } */
 
-.ListItem:hover {
+.ListItem:hover,
+.ListItem:focus {
    background-color: #dcdcdc;
+   outline: none;
 }
 
 .active {

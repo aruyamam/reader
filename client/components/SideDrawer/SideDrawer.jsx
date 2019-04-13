@@ -36,9 +36,11 @@ const SideDrawer = ({
                   {feeds.map(feed => (
                      <List.Item
                         onClick={() => handleOnClick(feed)}
+                        as={Link}
                         active={feed._id === currentFeed}
                         key={feed._id}
                         link={`/reader/${feed._id}`}
+                        tabIndex="0"
                      >
                         {/* <img src={feed.icon || `${feed.link}/favicon.ico`} alt="favicon" /> */}
                         {feed.title}
@@ -74,6 +76,8 @@ SideDrawer.propTypes = {
       }),
    ).isRequired,
    open: PropTypes.bool.isRequired,
+   style: PropTypes.object,
+   updateFeed: PropTypes.func.isRequired,
    user: PropTypes.shape({
       isAuthenticated: PropTypes.bool.isRequired,
    }).isRequired,
