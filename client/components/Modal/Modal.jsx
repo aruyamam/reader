@@ -23,6 +23,9 @@ const Modal = ({
    if (center) {
       classList.add(classes.center);
    }
+   else if (xy.isRight) {
+      style = { right: xy.x, top: xy.y };
+   }
    else {
       style = { left: xy.x, top: xy.y };
    }

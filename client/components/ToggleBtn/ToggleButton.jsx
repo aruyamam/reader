@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classes from './ToggleButton.css';
 import animate, { circ } from '../../helper/animation';
 
-const ToggleButton = ({ type, handler, style }) => {
+const ToggleButton = ({ type, onClick, style }) => {
    const el = useRef(null);
 
    const animation = () => {
@@ -23,8 +23,8 @@ const ToggleButton = ({ type, handler, style }) => {
       });
    };
 
-   const handleOnClick = () => {
-      handler();
+   const handleOnClick = (event) => {
+      if (onClick) onClick(event);
       animation();
    };
 
@@ -37,13 +37,13 @@ const ToggleButton = ({ type, handler, style }) => {
 };
 
 ToggleButton.defaultProps = {
-   handler: null,
+   onClick: null,
    type: 'button',
    sytle: {},
 };
 
 ToggleButton.propTypes = {
-   handler: PropTypes.func,
+   onClick: PropTypes.func,
    type: PropTypes.string,
    style: PropTypes.object,
 };

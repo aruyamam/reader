@@ -11,7 +11,7 @@ import classes from './Navbar.css';
 
 const Navbar = ({ closeDrawer, handleDrawer, user }) => {
    const [visibility, setVisibility] = useState(false);
-   const [xy, setxy] = useState({ x: 0, y: 0 });
+   const [xy, setxy] = useState({ x: 0, y: 0, isRight: false });
 
    const handleModal = () => {
       setVisibility(prevState => !prevState);
@@ -19,9 +19,11 @@ const Navbar = ({ closeDrawer, handleDrawer, user }) => {
 
    const handleOnClick = (event) => {
       const [rect] = event.target.getClientRects();
-      const x = event.clientX || rect.x;
+      const { innerWidth } = window;
+      const isRight = rect.x > innerWidth / 2;
       const y = event.clientY || rect.y;
-      setxy({ x: x - rect.width, y });
+      const x = isRight ? innerWidth - rect.right : event.target.offsetLeft;
+      setxy({ x, y, isRight });
       handleModal();
    };
 
@@ -29,7 +31,7 @@ const Navbar = ({ closeDrawer, handleDrawer, user }) => {
       <Grid className={classes.Navbar} container style={{ alignItems: 'center' }}>
          <Grid container style={{ alignItems: 'center' }}>
             {user.isAuthenticated && (
-               <ToggleButton type="button" handler={handleDrawer} label="btn" />
+               <ToggleButton type="button" onClick={handleDrawer} label="btn" />
             )}
             <Typography className={classes.title} as="h1">
                <Link to="/reader"> Reader</Link>
@@ -37,8 +39,8 @@ const Navbar = ({ closeDrawer, handleDrawer, user }) => {
          </Grid>
          <div>
             {user.isAuthenticated ? (
-               <AppbarBtn onClick={handleOnClick} className={classes.logout}>
-                  ログアウト
+               <AppbarBtn onClick={handleOnClick} className={classes.avatar}>
+                  {user.username[0]}
                </AppbarBtn>
             ) : (
                <Fragment>
