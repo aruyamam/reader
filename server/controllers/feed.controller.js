@@ -102,7 +102,8 @@ const updateFeed = async (req, res) => {
    const { items } = newFeed;
 
    const articles = await Article.find({
-      feedname: Types.ObjectId(feedId),
+      feedId: Types.ObjectId(feedId),
+      userId: Types.ObjectId(req.params.userId),
    }).exec();
 
    items
