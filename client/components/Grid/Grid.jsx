@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import gridClasses from './Grid.css';
 
-const Grid = ({
+const Grid = React.forwardRef(({
    children, className, container, onScroll, style,
-}) => {
+}, ref) => {
    const classList = [gridClasses.grid];
 
    if (container) {
@@ -18,11 +18,11 @@ const Grid = ({
    }
 
    return (
-      <div className={classList.join(' ')} style={style} onScroll={onScroll}>
+      <div ref={ref} className={classList.join(' ')} style={style} onScroll={onScroll}>
          {children}
       </div>
    );
-};
+});
 
 Grid.defaultProps = {
    className: '',

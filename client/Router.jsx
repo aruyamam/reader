@@ -14,13 +14,18 @@ import { fetchArticles, fetchFeeds, updateArticles } from './store/actions/feedA
 import classes from './Router.css';
 
 class Router extends Component {
-   state = {
-      isDrawerOpen: false,
-   };
+   constructor(props) {
+      super(props);
+
+      this.state = {
+         isDrawerOpen: false,
+      };
+
+      this.mainPageRef = React.createRef();
+   }
 
    componentDidMount() {
       const { user, fetchFeeds } = this.props;
-      // console.log(user);
       if (user.isAuthenticated) {
          fetchFeeds(user._id);
          this.setState({ isDrawerOpen: true });
@@ -89,6 +94,7 @@ class Router extends Component {
                            style={{ maxWidth: '100%', overflowX: 'hidden' }}
                         > */}
                         <Grid
+                           ref={this.mainPageRef}
                            className={classes.mainContent}
                            xs={12}
                            style={{
@@ -101,7 +107,11 @@ class Router extends Component {
                               <Route
                                  path="/reader/:feedId"
                                  render={props => (
-                                    <FeedPage handleOnScroll={this.handleOnScroll} {...props} />
+                                    <FeedPage
+                                       mainPageRef={this.mainPageRef}
+                                       handleOnScroll={this.handleOnScroll}
+                                       {...props}
+                                    />
                                  )}
                               />
                               <Route

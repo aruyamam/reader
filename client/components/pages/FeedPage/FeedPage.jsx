@@ -13,9 +13,10 @@ class FeedPage extends Component {
    }
 
    componentDidUpdate(prevProps) {
-      const { fetchArticles, match } = this.props;
+      const { fetchArticles, match, mainPageRef } = this.props;
       if (prevProps.match.params.feedId !== match.params.feedId) {
          fetchArticles(match.params.feedId);
+         mainPageRef.current.scrollTo(0, 0);
       }
    }
 
@@ -69,6 +70,9 @@ FeedPage.propTypes = {
    error: PropTypes.string.isRequired,
    fetchArticles: PropTypes.func.isRequired,
    loading: PropTypes.bool.isRequired,
+   mainPageRef: PropTypes.shape({
+      current: PropTypes.object,
+   }).isRequired,
    match: PropTypes.shape({
       params: PropTypes.shape({
          feedId: PropTypes.string,
