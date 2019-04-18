@@ -23,31 +23,29 @@ class FeedPage extends Component {
       const {
          articles, error, loading, match, readArticle,
       } = this.props;
+      // console.log(articles);
 
       return (
          <Fragment>
-            {loading ? (
+            {error ? (
+               <div className={classes.error}>{error}</div>
+            ) : (
+               articles.map((article, i) => (
+                  <FeedContent
+                     key={article._id}
+                     article={article}
+                     match={match}
+                     readArticle={readArticle}
+                     tabIndex={i}
+                  />
+               ))
+            )}
+            {loading && (
                <div className={classes.loader}>
                   <div className={classes.loaderInner}>
                      <Loading />
                   </div>
                </div>
-            ) : (
-               <Fragment>
-                  {error ? (
-                     <div className={classes.error}>{error}</div>
-                  ) : (
-                     articles.map((article, i) => (
-                        <FeedContent
-                           key={article._id}
-                           article={article}
-                           match={match}
-                           readArticle={readArticle}
-                           tabIndex={i}
-                        />
-                     ))
-                  )}
-               </Fragment>
             )}
          </Fragment>
       );
@@ -63,6 +61,7 @@ const mapStates = state => ({
    articles: state.feed.articles,
    error: state.error.message,
    loading: state.async.loading,
+   count: state.feed.count,
 });
 
 FeedPage.propTypes = {

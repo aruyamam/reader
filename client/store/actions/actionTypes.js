@@ -16,6 +16,7 @@ export const SUBSCRIBE_FEED = 'SUBSCRIBE_FEED';
 export const SET_FEEDS = 'SET_FEEDS';
 export const SET_CURRENT_FEED = 'SET_CURRENT_FEED';
 export const SET_ARTICLES = 'SET_ARTICLES';
+export const ADD_ARTICLES = 'ADD_ARTICLES';
 
 export const ASYNC_ACTION_START = 'ASYNC_ACTION_START';
 export const ASYNC_ACTION_END = 'ASYNC_ACTION_END';

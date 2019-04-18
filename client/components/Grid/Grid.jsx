@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import gridClasses from './Grid.css';
 
 const Grid = ({
-   children, className, container, style,
+   children, className, container, onScroll, style,
 }) => {
    const classList = [gridClasses.grid];
 
@@ -18,7 +18,7 @@ const Grid = ({
    }
 
    return (
-      <div className={classList.join(' ')} style={style}>
+      <div className={classList.join(' ')} style={style} onScroll={onScroll}>
          {children}
       </div>
    );
@@ -27,6 +27,7 @@ const Grid = ({
 Grid.defaultProps = {
    className: '',
    container: false,
+   onScroll: null,
    style: {},
 };
 
@@ -38,6 +39,7 @@ Grid.propTypes = {
    ]).isRequired,
    className: PropTypes.string,
    container: PropTypes.bool,
+   onScroll: PropTypes.func,
    style: PropTypes.object,
 };
 

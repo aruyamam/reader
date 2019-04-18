@@ -7,12 +7,10 @@ import Landing from './components/Landing';
 import SideDrawer from './components/SideDrawer/SideDrawer';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/pages/Home';
-import Register from './components/pages/Register/Register';
-import Login from './components/pages/Login/Login';
 import RegisterForm from './components/pages/RegisterForm/RegisterForm';
 import FeedPage from './components/pages/FeedPage/FeedPage';
 import PrivateRoute from './components/hoc/PrivateRoute';
-import { fetchFeeds } from './store/actions/feedAction';
+import { fetchArticles, fetchFeeds, updateArticles } from './store/actions/feedAction';
 import classes from './Router.css';
 
 class Router extends Component {
@@ -28,6 +26,26 @@ class Router extends Component {
          this.setState({ isDrawerOpen: true });
       }
    }
+
+   handleOnScroll = (e) => {
+      const { feed, loading, updateArticles } = this.props;
+
+      if (this.handleScrollBottom(e) && feed.length < feed.max && !loading) {
+         updateArticles(feed.currentFeed);
+      }
+   };
+
+   handleScrollBottom = (e) => {
+      const tolerance = 3;
+      const { childNodes, clientHeight, scrollTop } = e.target;
+      const offsetTop = childNodes[childNodes.length - 1].offsetTop - clientHeight;
+
+      if (offsetTop >= Math.round(scrollTop) && offsetTop - tolerance <= Math.round(scrollTop)) {
+         return true;
+      }
+
+      return false;
+   };
 
    handleDrawer = () => {
       this.setState(state => ({
@@ -76,10 +94,16 @@ class Router extends Component {
                            style={{
                               marginLeft: isDrawerOpen ? '268px' : '0',
                            }}
+                           onScroll={this.handleOnScroll}
                         >
                            <Switch>
                               <Route exact path="/reader" component={Home} />
-                              <PrivateRoute path="/reader/:feedId" component={FeedPage} />
+                              <Route
+                                 path="/reader/:feedId"
+                                 render={props => (
+                                    <FeedPage handleOnScroll={this.handleOnScroll} {...props} />
+                                 )}
+                              />
                               <Route
                                  path="/register"
                                  render={props => (
@@ -115,17 +139,33 @@ class Router extends Component {
 
 const actions = {
    fetchFeeds,
+   fetchArticles,
+   updateArticles,
 };
 
 const mapStates = state => ({
    user: state.auth.user,
+   feed: {
+      currentFeed: state.feed.currentFeed,
+      count: state.feed.count,
+      max: state.feed.max,
+      length: state.feed.articles.length,
+   },
+   loading: state.async.loading,
 });
 
+const {
+   bool, func, shape, string,
+} = PropTypes;
+
 Router.propTypes = {
-   fetchFeeds: PropTypes.func.isRequired,
-   user: PropTypes.shape({
-      _id: PropTypes.string,
-      isAuthenticated: PropTypes.bool.isRequired,
+   feed: shape({}).isRequired,
+   fetchFeeds: func.isRequired,
+   loading: bool.isRequired,
+   updateArticles: func.isRequired,
+   user: shape({
+      _id: string,
+      isAuthenticated: bool.isRequired,
    }).isRequired,
 };
 

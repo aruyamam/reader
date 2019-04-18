@@ -16,12 +16,55 @@ const fetchFeeds = async (req, res) => {
 };
 
 const fetchArticles = async (req, res) => {
+   const { offset } = req.params;
    const data = await Article.find({
       feedId: Types.ObjectId(req.params.feedId),
       userId: Types.ObjectId(req.params.userId),
    }).exec();
 
-   return res.status(200).json(data[0].articles);
+   const max = data[0].articles.length;
+
+   // return res.status(200).json(data[0].articles);
+   return res.status(200).json({
+      articles: data[0].articles.splice(0, offset),
+      max,
+   });
+};
+
+const updateArticles = async (req, res) => {
+   const { count, offset } = req.body;
+
+   const articles = await Article.aggregate([
+      {
+         $match: {
+            feedId: Types.ObjectId(req.params.feedId),
+            userId: Types.ObjectId(req.params.userId),
+         },
+      },
+      {
+         $unwind: '$articles',
+      },
+      {
+         $skip: offset * count,
+      },
+      {
+         $limit: offset,
+      },
+      {
+         $project: {
+            isRead: '$articles.isRead',
+            _id: '$articles._id',
+            content: '$articles.content',
+            title: '$articles.title',
+            link: '$articles.link',
+            pubDate: '$articles.pubDate',
+            guid: '$articles.guid',
+            isoDate: '$articles.isoDate',
+         },
+      },
+   ]);
+
+   return res.status(200).json(articles);
 };
 
 const subscribeFeed = async (req, res) => {
@@ -120,7 +163,9 @@ const updateFeed = async (req, res) => {
       { articles: articles[0].articles },
    );
 
-   return res.status(200).json(articles[0].articles);
+   return res
+      .status(200)
+      .json({ articles: articles[0].articles, max: articles[0].articles.length });
 };
 
 export default {
@@ -128,5 +173,6 @@ export default {
    fetchFeeds,
    readArticle,
    subscribeFeed,
+   updateArticles,
    updateFeed,
 };
