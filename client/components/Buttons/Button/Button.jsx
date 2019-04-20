@@ -13,7 +13,7 @@ const types = {
 const sizes = {
    small: 'small',
    medium: 'medium',
-   big: 'big',
+   large: 'large',
 };
 
 const Button = ({
