@@ -13,7 +13,6 @@ const SideDrawer = ({
 }) => {
    const handleOnClick = async (feed) => {
       if (!compareToToday(feed.updated)) {
-         console.log(feed.updated);
          await updateFeed(user._id, feed._id);
       }
    };
@@ -60,7 +59,8 @@ const SideDrawer = ({
 
 const mapStates = state => ({
    currentFeed: state.feed.currentFeed,
-   feeds: state.feed.feeds.map(feed => ({ ...feed.feed })),
+   // feeds: state.feed.feeds.map(feed => ({ ...feed.feed })),
+   feeds: state.feed.feeds,
 });
 
 const actions = {

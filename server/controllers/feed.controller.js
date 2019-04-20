@@ -5,12 +5,41 @@ import Subscribe from '../models/Subscribe';
 import Article from '../models/Article';
 
 const fetchFeeds = async (req, res) => {
-   const feeds = await Subscribe.find({ user: Types.ObjectId(req.params.userId) })
-      .populate('feed')
-      .select('feed')
-      .exec();
+   const feeds = await Subscribe.aggregate([
+      {
+         $match: {
+            user: Types.ObjectId(req.params.userId),
+         },
+      },
+      {
+         $lookup: {
+            from: 'feeds',
+            localField: 'feed',
+            foreignField: '_id',
+            as: 'feed',
+         },
+      },
+      {
+         $unwind: '$feed',
+      },
+      {
+         $project: {
+            _id: '$feed._id',
+            updated: '$updated',
+            title: '$feed.title',
+            link: '$feed.link',
+            feedUrl: '$feed.feedUrl',
+            description: '$feed.description',
+         },
+      },
+      // {
+      //    $sort: {
+      //       title: 1,
+      //    },
+      // },
+   ]);
 
-   feeds.sort((a, b) => (a.feed.title.toUpperCase() < b.feed.title.toUpperCase() ? -1 : 1));
+   feeds.sort((a, b) => (a.title.toUpperCase() < b.title.toUpperCase() ? -1 : 1));
 
    return res.json(feeds);
 };
@@ -98,12 +127,14 @@ const subscribeFeed = async (req, res) => {
       feedId: feed._id,
       userId,
       articles: items,
+      updated: Date.now(),
    });
    await articles.save();
 
    const subscribe = new Subscribe({
       user: userId,
       feed: feed._id,
+      updated: Date.now(),
    });
    await subscribe.save();
 
@@ -135,16 +166,25 @@ const readArticle = async (req, res) => {
 const updateFeed = async (req, res) => {
    const rssParser = new RSSParser();
    const { feedId } = req.body;
+   const { userId } = req.params;
 
-   const feed = await Feed.findById(feedId);
+   const subscribe = await Subscribe.findOneAndUpdate(
+      {
+         feed: Types.ObjectId(feedId),
+         user: Types.ObjectId(userId),
+      },
+      { updated: Date.now() },
+   )
+      .populate('feed')
+      .exec();
 
-   const newFeed = await rssParser.parseURL(feed.feedUrl);
+   const newFeed = await rssParser.parseURL(subscribe.feed.feedUrl);
    if (newFeed.errno) {
       return res.json({ error: newFeed.errno });
    }
    const { items } = newFeed;
 
-   const articles = await Article.find({
+   const [article] = await Article.find({
       feedId: Types.ObjectId(feedId),
       userId: Types.ObjectId(req.params.userId),
    }).exec();
@@ -152,20 +192,21 @@ const updateFeed = async (req, res) => {
    items
       .sort((a, b) => (new Date(a.pubDate) > new Date(b.pubDate) ? 1 : -1))
       .forEach((item) => {
-         if (new Date(item.pubDate) > new Date(feed.updated)) {
-            articles[0].articles.unshift(item);
+         if (new Date(item.pubDate) > new Date(article.updated)) {
+            article.articles.unshift(item);
          }
       });
 
    await Feed.findByIdAndUpdate(feedId, { updated: Date.now() });
-   const newArticles = await Article.findOneAndUpdate(
-      { _id: articles[0]._id },
-      { articles: articles[0].articles },
+   await Article.findOneAndUpdate(
+      { _id: article._id },
+      {
+         articles: article.articles,
+         updated: Date.now(),
+      },
    );
 
-   return res
-      .status(200)
-      .json({ articles: articles[0].articles, max: articles[0].articles.length });
+   return res.status(200).json({ articles: article.articles, max: article.articles.length });
 };
 
 export default {

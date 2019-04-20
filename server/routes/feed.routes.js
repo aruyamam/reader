@@ -14,9 +14,9 @@ router
 
 router
    .route('/:userId/:feedId')
-   .post(feedCtrl.updateArticles)
+   .post(auth, feedCtrl.updateArticles)
    .put(auth, feedCtrl.readArticle);
 
-router.route('/:userId/:feedId/:offset').get(feedCtrl.fetchArticles);
+router.route('/:userId/:feedId/:offset').get(auth, feedCtrl.fetchArticles);
 
 export default router;

@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import { ItemSchema } from './Item';
 
 const ArticleSchema = new Schema({
    feedId: {
@@ -9,21 +10,8 @@ const ArticleSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'User',
    },
-   articles: [
-      new Schema({
-         title: String,
-         link: String,
-         pubDate: Date,
-         content: String,
-         contentSnippet: String,
-         guid: String,
-         isoDate: Date,
-         isRead: {
-            type: Boolean,
-            default: false,
-         },
-      }),
-   ],
+   updated: Date,
+   articles: [ItemSchema],
 });
 
 export default mongoose.model('Article', ArticleSchema);

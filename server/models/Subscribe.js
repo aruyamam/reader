@@ -9,6 +9,7 @@ const SubscribeSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Feed',
    },
+   updated: Date,
 });
 
 export default mongoose.model('Subscribe', SubscribeSchema);

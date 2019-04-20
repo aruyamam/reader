@@ -19,10 +19,6 @@ const FeedSchema = new Schema({
    icon: {
       type: String,
    },
-   updated: {
-      type: Date,
-      default: Date.now(),
-   },
 });
 
 export default mongoose.model('Feed', FeedSchema);
