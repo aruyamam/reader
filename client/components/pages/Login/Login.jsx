@@ -63,10 +63,14 @@ class Login extends Component {
          },
       );
 
+      // フォームにエラーがなくユーザーがデータベースに登録されている場合のみ
+      // readerページにリダイレクト
       if (formIsValid) {
-         await loginUser(user);
-         history.push('/reader');
-         handleDrawer();
+         const result = await loginUser(user);
+         if (result) {
+            history.push('/reader');
+            handleDrawer();
+         }
       }
    };
 
@@ -100,12 +104,14 @@ class Login extends Component {
 
    render() {
       const { email, password } = this.state;
+      const { error } = this.props;
 
       return (
          <Card className={classes.login}>
             <Typography className={classes.title} as="h1" align="center">
                ログイン
             </Typography>
+            {error ? <div className={classes.error}>{error}</div> : null}
             <Form onSubmit={this.handleSubmit}>
                <Form.TextField
                   onChange={this.handleInputChange}
@@ -135,19 +141,26 @@ class Login extends Component {
    }
 }
 
+const { func, shape, string } = PropTypes;
+
 Login.propTypes = {
-   handleDrawer: PropTypes.func.isRequired,
-   history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
+   error: string.isRequired,
+   handleDrawer: func.isRequired,
+   history: shape({
+      push: func.isRequired,
    }).isRequired,
-   loginUser: PropTypes.func.isRequired,
+   loginUser: func.isRequired,
 };
+
+const mapStates = state => ({
+   error: state.error.message,
+});
 
 const actions = {
    loginUser,
 };
 
 export default connect(
-   null,
+   mapStates,
    actions,
 )(Login);

@@ -28,10 +28,19 @@ export const registerUser = user => async (dispatch) => {
 };
 
 export const loginUser = user => async (dispatch) => {
-   const response = await axios.post('/api/auth/login', user);
-   dispatch(setCurrentUser(response.data));
-   localStorage.setItem('jwt', response.headers['x-auth-token']);
-   setAuthToken(response.headers['x-auth-token']);
+   try {
+      const response = await axios.post('/api/auth/login', user);
+      dispatch(setCurrentUser(response.data));
+      localStorage.setItem('jwt', response.headers['x-auth-token']);
+      setAuthToken(response.headers['x-auth-token']);
+
+      return true;
+   }
+   catch (err) {
+      dispatch(setError(err.response.data.error));
+
+      return false;
+   }
 };
 
 export const logoutUser = () => (dispatch) => {

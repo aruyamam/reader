@@ -7,6 +7,8 @@ import Landing from './components/Landing';
 import SideDrawer from './components/SideDrawer/SideDrawer';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/pages/Home';
+import Login from './components/pages/Login/Login';
+import Register from './components/pages/Register/Register';
 import RegisterForm from './components/pages/RegisterForm/RegisterForm';
 import FeedPage from './components/pages/FeedPage/FeedPage';
 import PrivateRoute from './components/hoc/PrivateRoute';
@@ -117,22 +119,13 @@ class Router extends Component {
                               <Route
                                  path="/register"
                                  render={props => (
-                                    <RegisterForm
-                                       handleDrawer={this.handleDrawer}
-                                       register
-                                       {...props}
-                                    />
+                                    <Register handleDrawer={this.handleDrawer} {...props} />
                                  )}
                               />
                               <Route
                                  path="/login"
                                  render={props => (
-                                    <RegisterForm
-                                       handleDrawer={this.handleDrawer}
-                                       label="ログイン"
-                                       btnLabel="ログイン"
-                                       {...props}
-                                    />
+                                    <Login handleDrawer={this.handleDrawer} {...props} />
                                  )}
                               />
                            </Switch>

@@ -49,7 +49,7 @@ const login = async (req, res) => {
    const { email, password } = req.body;
    const user = await User.findOne({ email });
    if (!user) {
-      return res.status(401).json({ error: '不正なメールアドレスです。' });
+      return res.status(401).json({ error: 'ユーザが見つかりません。' });
    }
 
    const validPassword = await bcrypt.compare(password, user.password);
