@@ -7,7 +7,7 @@ import Typography from '../../Typography/Typography';
 import Button from '../../Buttons/Button/Button';
 import { registerUser } from '../../../store/actions/authAction';
 import validate, { objIsEmpty } from '../../../helper/validation';
-import classes from './Register.css'
+import classes from './Register.css';
 
 class Register extends Component {
    state = {
@@ -44,14 +44,16 @@ class Register extends Component {
       formIsValid: false,
    };
 
-   handleSubmit = (event) => {
+   handleSubmit = async (event) => {
       event.preventDefault();
-      const { registerUser } = this.props;
+      const { handleDrawer, history, registerUser } = this.props;
       const {
          formIsValid, username, email, password,
       } = this.state;
 
       Object.keys(this.state).forEach((name) => {
+         // 何も入力されずに登録ボタンを押された場合のチェック
+         // 無理やりバリデートにかけエラーをはかす
          if (name !== 'formIsValid' && !name.touched) {
             const errors = validate(name, '', this.state[name].rules);
 
@@ -65,6 +67,7 @@ class Register extends Component {
          }
       });
 
+      // ユーザーオブジェクトの準備
       const user = Object.assign(
          {},
          {
@@ -74,8 +77,13 @@ class Register extends Component {
          },
       );
 
+      // エラーがない場合のみ登録してリダイレクト
       if (formIsValid) {
-         registerUser(user);
+         const result = await registerUser(user);
+         if (result) {
+            history.push('/reader');
+            handleDrawer();
+         }
       }
    };
 
@@ -158,8 +166,14 @@ const actions = {
    registerUser,
 };
 
+const { func, shape } = PropTypes;
+
 Register.propTypes = {
-   registerUser: PropTypes.func.isRequired,
+   handleDrawer: func.isRequired,
+   history: shape({
+      push: func.isRequired,
+   }).isRequired,
+   registerUser: func.isRequired,
 };
 
 export default connect(

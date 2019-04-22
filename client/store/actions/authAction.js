@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { setError } from './errorAction';
 import { SET_CURRENT_USER } from './actionTypes';
+import { setError } from './errorAction';
 import { setFeeds } from './feedAction';
+import { asyncActionStart, asyncActionEnd } from './asyncAction';
 import setAuthToken from '../../helper/setAuthToken';
 
 export const setCurrentUser = user => ({
@@ -10,21 +11,21 @@ export const setCurrentUser = user => ({
 });
 
 export const registerUser = user => async (dispatch) => {
-   const response = await axios.post('/api/auth/register', user);
-   // .then((res) => {
-   //    // console.log(res);
+   try {
+      dispatch(asyncActionStart());
+      const response = await axios.post('/api/auth/register', user);
+      dispatch(setCurrentUser(response.data));
+      localStorage.setItem('jwt', response.headers['x-auth-token']);
+      setAuthToken(response.headers['x-auth-token']);
+      dispatch(asyncActionEnd());
 
-   //    return true;
-   // })
-   // .catch((error) => {
-   //    dispatch(setError(error));
-   //    console.log(error);
+      return true;
+   }
+   catch (err) {
+      dispatch(setError(err.response.data.error));
 
-   //    return false;
-   // });
-   dispatch(setCurrentUser(response.data));
-   localStorage.setItem('jwt', response.headers['x-auth-token']);
-   setAuthToken(response.headers['x-auth-token']);
+      return false;
+   }
 };
 
 export const loginUser = user => async (dispatch) => {

@@ -9,9 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 import Home from './components/pages/Home';
 import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
-import RegisterForm from './components/pages/RegisterForm/RegisterForm';
 import FeedPage from './components/pages/FeedPage/FeedPage';
-import PrivateRoute from './components/hoc/PrivateRoute';
 import { fetchArticles, fetchFeeds, updateArticles } from './store/actions/feedAction';
 import classes from './Router.css';
 
