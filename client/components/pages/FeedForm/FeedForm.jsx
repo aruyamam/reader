@@ -9,7 +9,7 @@ import classes from './FeedForm.css';
 import Card from '../../Card/Card';
 
 const FeedForm = ({
-   fetchFeeds, history, userId, subscribeFeed,
+   error, fetchFeeds, history, loading, userId, subscribeFeed,
 }) => {
    const [feedUrl, setFeedUrl] = useState('');
 
@@ -30,6 +30,7 @@ const FeedForm = ({
          <Typography as="h1" align="center" className={classes.title}>
             URL登録
          </Typography>
+         {error ? <div className={classes.error}>{error}</div> : null}
          <Form onSubmit={handleOnSubmit}>
             <Form.TextField
                id="feedUrl"
@@ -37,7 +38,7 @@ const FeedForm = ({
                value={feedUrl}
                onChange={handleOnChange}
             />
-            <Button className={classes.btn} type="submit" fit>
+            <Button className={classes.btn} type="submit" fit loading={loading}>
                登録
             </Button>
          </Form>
@@ -45,21 +46,32 @@ const FeedForm = ({
    );
 };
 
-const mapDispatchToProps = {
+const mapStates = state => ({
+   error: state.error.message,
+   loading: state.async.loading,
+});
+
+const actions = {
    fetchFeeds,
    subscribeFeed,
 };
 
+const {
+   bool, func, shape, string,
+} = PropTypes;
+
 FeedForm.propTypes = {
-   fetchFeeds: PropTypes.func.isRequired,
-   history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
+   error: string.isRequired,
+   fetchFeeds: func.isRequired,
+   history: shape({
+      push: func.isRequired,
    }).isRequired,
-   subscribeFeed: PropTypes.func.isRequired,
-   userId: PropTypes.string.isRequired,
+   loading: bool.isRequired,
+   subscribeFeed: func.isRequired,
+   userId: string.isRequired,
 };
 
 export default connect(
-   null,
-   mapDispatchToProps,
+   mapStates,
+   actions,
 )(FeedForm);

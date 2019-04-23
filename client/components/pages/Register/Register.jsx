@@ -117,12 +117,14 @@ class Register extends Component {
 
    render() {
       const { email, username, password } = this.state;
+      const { loading, error } = this.props;
 
       return (
          <Card className={classes.register}>
             <Typography as="h1" align="center" className={classes.title}>
                会員登録
             </Typography>
+            {error ? <div className={classes.error}>{error}</div> : null}
             <Form onSubmit={this.handleSubmit}>
                <Form.TextField
                   onBlur={this.handleOnBlur}
@@ -153,7 +155,7 @@ class Register extends Component {
                   type="password"
                   value={password.value}
                />
-               <Button className={classes.btn} fit type="submit">
+               <Button className={classes.btn} fit loading={loading} type="submit">
                   登録
                </Button>
             </Form>
@@ -162,21 +164,30 @@ class Register extends Component {
    }
 }
 
+const mapStates = state => ({
+   error: state.error.message,
+   loading: state.async.loading,
+});
+
 const actions = {
    registerUser,
 };
 
-const { func, shape } = PropTypes;
+const {
+   bool, func, shape, string,
+} = PropTypes;
 
 Register.propTypes = {
+   error: string.isRequired,
    handleDrawer: func.isRequired,
    history: shape({
       push: func.isRequired,
    }).isRequired,
+   loading: bool.isRequired,
    registerUser: func.isRequired,
 };
 
 export default connect(
-   null,
+   mapStates,
    actions,
 )(Register);

@@ -104,7 +104,7 @@ class Login extends Component {
 
    render() {
       const { email, password } = this.state;
-      const { error } = this.props;
+      const { loading, error } = this.props;
 
       return (
          <Card className={classes.login}>
@@ -132,7 +132,7 @@ class Login extends Component {
                   type="password"
                   value={password.value}
                />
-               <Button className={classes.btn} fit type="submit">
+               <Button className={classes.btn} fit loading={loading} type="submit">
                   ログイン
                </Button>
             </Form>
@@ -141,7 +141,18 @@ class Login extends Component {
    }
 }
 
-const { func, shape, string } = PropTypes;
+const mapStates = state => ({
+   error: state.error.message,
+   loading: state.async.loading,
+});
+
+const actions = {
+   loginUser,
+};
+
+const {
+   bool, func, shape, string,
+} = PropTypes;
 
 Login.propTypes = {
    error: string.isRequired,
@@ -149,15 +160,8 @@ Login.propTypes = {
    history: shape({
       push: func.isRequired,
    }).isRequired,
+   loading: bool.isRequired,
    loginUser: func.isRequired,
-};
-
-const mapStates = state => ({
-   error: state.error.message,
-});
-
-const actions = {
-   loginUser,
 };
 
 export default connect(

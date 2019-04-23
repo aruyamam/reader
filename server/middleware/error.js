@@ -6,5 +6,5 @@ export default (err, req, res, next) => {
       meta: err,
    });
 
-   res.status(500).send('Someting failed.');
+   res.status(500).json({ error: 'Internal Server Error' });
 };

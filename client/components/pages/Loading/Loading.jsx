@@ -4,6 +4,7 @@ import classes from './Loading.css';
 import List from '../../../helper/List';
 
 const sizes = {
+   inner: 'inner',
    small: 'small',
    medium: 'medium',
    large: 'large',

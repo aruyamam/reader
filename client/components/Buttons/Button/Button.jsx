@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classes from './Button.css';
 import animate, { circ } from '../../../helper/animation';
 import ClassList from '../../../helper/List';
+import Loading from '../../pages/Loading/Loading';
 
 const types = {
    button: 'button',
@@ -17,7 +18,7 @@ const sizes = {
 };
 
 const Button = ({
-   className, children, fit, label, type, onClick, size, style,
+   className, children, fit, label, loading, type, onClick, size, style,
 }) => {
    const el = useRef(null);
    const classList = new ClassList(classes.btn);
@@ -67,7 +68,7 @@ const Button = ({
    return (
       /* eslint react/button-has-type: "off"  */
       <button className={classList.strList} onClick={handleOnClick} style={style} type={btnType}>
-         {label || children}
+         {loading ? <Loading size="inner" /> : label || children}
          <span ref={el} className={classes.effect} />
       </button>
    );

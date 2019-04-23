@@ -23,6 +23,7 @@ export const registerUser = user => async (dispatch) => {
    }
    catch (err) {
       dispatch(setError(err.response.data.error));
+      dispatch(asyncActionEnd());
 
       return false;
    }
@@ -30,15 +31,18 @@ export const registerUser = user => async (dispatch) => {
 
 export const loginUser = user => async (dispatch) => {
    try {
+      dispatch(asyncActionStart());
       const response = await axios.post('/api/auth/login', user);
       dispatch(setCurrentUser(response.data));
       localStorage.setItem('jwt', response.headers['x-auth-token']);
       setAuthToken(response.headers['x-auth-token']);
+      dispatch(asyncActionEnd());
 
       return true;
    }
    catch (err) {
       dispatch(setError(err.response.data.error));
+      dispatch(asyncActionEnd());
 
       return false;
    }
