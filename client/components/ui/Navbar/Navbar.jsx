@@ -2,8 +2,8 @@ import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Grid from '../Grid/Grid';
-import AppbarBtn from '../Buttons/LoginBtn/AppbarBtn';
-import ToggleButton from '../ToggleBtn/ToggleButton';
+import NavbarBtn from '../Buttons/NavbarBtn/NavbarBtn';
+import ToggleButton from '../Buttons/ToggleBtn/ToggleBtn';
 import Typography from '../Typography/Typography';
 import Menu from '../Menu/Menu';
 import Modal from '../Modal/Modal';
@@ -39,9 +39,9 @@ const Navbar = ({ closeDrawer, handleDrawer, user }) => {
          </Grid>
          <div>
             {user.isAuthenticated ? (
-               <AppbarBtn onClick={handleOnClick} className={classes.avatar}>
+               <NavbarBtn onClick={handleOnClick} className={classes.avatar}>
                   {user.username[0]}
-               </AppbarBtn>
+               </NavbarBtn>
             ) : (
                <Fragment>
                   <Link to="/login" className={classes.link}>

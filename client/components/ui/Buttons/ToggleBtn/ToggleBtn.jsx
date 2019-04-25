@@ -1,8 +1,8 @@
 /* eslint react/button-has-type: "off" */
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import classes from './ToggleButton.css';
-import animate, { circ } from '../../../helper/animation';
+import classes from './ToggleBtn.css';
+import animate, { circ } from '../../../../helper/animation';
 
 const ToggleButton = ({ type, onClick, style }) => {
    const el = useRef(null);

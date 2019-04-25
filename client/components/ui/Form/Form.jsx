@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TextField from './TextField/TextField.1';
+import TextField from './TextField/TextField';
 
 class Form extends Component {
    static TextField = TextField;

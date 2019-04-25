@@ -1,79 +1,72 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classes from './TextField.css';
+import ClassList from '../../../../helper/List';
 
-const intialStyle = {
-   position: 'relative',
-   top: '-2px',
-   left: '50%',
-   display: 'block',
-   width: '0px',
-   height: '3px',
-   backgroundColor: '#000',
-   transform: 'translateX(-50%)',
-   transition: 'all .4s ease-out',
-};
-
-const labelStyle = {
-   top: '0',
-   fontSize: '0.8rem',
-};
-
-const inActiveLblStyle = {
-   top: '1.2rem',
-   fontSize: '1rem',
-};
-
-const TextField = (props) => {
-   const [style, setStyle] = useState(intialStyle);
-   const [lblStyle, setLblStyle] = useState({});
+const TextField = ({
+   color,
+   error,
+   id,
+   label,
+   messages,
+   type,
+   placeholder,
+   touched,
+   value,
+   onBlur,
+   onChange,
+}) => {
+   const [effectClassList, seteffectClassList] = useState([classes.effect]);
+   const [lblClassList, setLblClassList] = useState([classes.label]);
 
    const handleBlur = (event) => {
       if (event.target.value === '') {
-         setLblStyle(prevStyle => ({
-            ...prevStyle,
-            ...inActiveLblStyle,
-         }));
+         setLblClassList([classes.label]);
       }
 
-      setStyle(prevStyle => ({
-         ...prevStyle,
-         width: '0',
-         backgroundColor: 'black',
-      }));
+      if (onBlur) {
+         onBlur(event);
+      }
+      seteffectClassList([classes.effect]);
    };
 
    const handleFocus = () => {
-      setLblStyle(prevStyle => ({
-         ...prevStyle,
-         ...labelStyle,
-      }));
-      setStyle(prevStyle => ({
-         ...prevStyle,
-         width: '100%',
-         backgroundColor: props.color,
-      }));
+      setLblClassList(prevState => [...prevState, classes.isActive]);
+      seteffectClassList(prevState => [...prevState, classes.isActive]);
+   };
+
+   const handleOnChange = (event) => {
+      if (onChange) {
+         onChange(event);
+      }
    };
 
    return (
       <div className={classes.Outer}>
          <input
             className={classes.TextField}
-            id={props.id}
-            type={props.type}
-            placeholder={props.placeholder}
-            name={props.id}
-            value={props.value}
+            id={id}
+            type={type}
+            placeholder={placeholder}
+            name={id}
+            value={value}
             onBlur={handleBlur}
             onFocus={handleFocus}
-            onChange={props.onChange}
+            onChange={handleOnChange}
          />
-         {props.label && (
-            <label className={classes.Label} htmlFor={props.id} style={lblStyle}>
-               {props.label}
+         {label && (
+            /* eslint jsx-a11y/label-has-for: "off"  */
+            <label className={lblClassList.join(' ')} htmlFor={id}>
+               {label}
             </label>
          )}
-         <div style={style} />
+         <div
+            className={effectClassList.join(' ')}
+            style={{
+               backgroundColor: error ? 'red' : color,
+            }}
+         />
+         {error && messages && <p className={classes.error}>{`${messages[0]}`}</p>}
       </div>
    );
 };
@@ -82,16 +75,20 @@ TextField.defaultProps = {
    color: '#0069c0',
    id: '',
    label: '',
+   onChange: null,
    placeholder: '',
    type: 'text',
+   value: '',
 };
 
 TextField.propTypes = {
    color: PropTypes.string,
    id: PropTypes.string,
    label: PropTypes.string,
+   onChange: PropTypes.func,
    placeholder: PropTypes.string,
    type: PropTypes.string,
+   value: PropTypes.string,
 };
 
 export default TextField;

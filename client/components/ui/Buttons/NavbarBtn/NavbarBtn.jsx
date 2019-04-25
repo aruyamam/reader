@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classes from './AppbarBtn.css';
+import classes from './NavbarBtn.css';
 
 const types = {
    button: 'button',
@@ -8,7 +8,7 @@ const types = {
    reset: 'reset',
 };
 
-const AppbarBtn = ({
+const NavbarBtn = ({
    children, className, label, type, onClick,
 }) => {
    const classNames = [classes.appbarBtn];
@@ -28,14 +28,14 @@ const AppbarBtn = ({
    );
 };
 
-AppbarBtn.defaultProps = {
+NavbarBtn.defaultProps = {
    className: '',
    label: '',
    onClick: null,
    type: 'button',
 };
 
-AppbarBtn.propTypes = {
+NavbarBtn.propTypes = {
    className: PropTypes.string,
    children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
    label: PropTypes.string,
@@ -43,4 +43,4 @@ AppbarBtn.propTypes = {
    type: PropTypes.string,
 };
 
-export default AppbarBtn;
+export default NavbarBtn;
