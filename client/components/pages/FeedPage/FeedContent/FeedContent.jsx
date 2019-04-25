@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Card from '../../../Card/Card';
-import Typography from '../../../Typography/Typography';
+import Card from '../../../ui/Card/Card';
+import Typography from '../../../ui/Typography/Typography';
 import classes from './FeedContent.css';
 
 let style = {};

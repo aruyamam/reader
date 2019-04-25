@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classes from './Card.css';
-import List from '../../helper/List';
+import List from '../../../helper/List';
 
 const sizes = {
    small: 'small',

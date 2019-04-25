@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Typography from '../../Typography/Typography';
-import Form from '../../Form/Form';
-import Button from '../../Buttons/Button/Button';
+import Typography from '../../ui/Typography/Typography';
+import Form from '../../ui/Form/Form';
+import Button from '../../ui/Buttons/Button/Button';
 import { fetchFeeds, subscribeFeed } from '../../../store/actions/feedAction';
 import classes from './FeedForm.css';
-import Card from '../../Card/Card';
+import Card from '../../ui/Card/Card';
 
 const FeedForm = ({
    error, fetchFeeds, history, loading, userId, subscribeFeed,

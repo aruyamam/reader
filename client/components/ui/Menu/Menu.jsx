@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import Card from '../Card/Card';
 import List from '../List/List';
 import classes from './Menu.css';
-import { logoutUser } from '../../store/actions/authAction';
+import { logoutUser } from '../../../store/actions/authAction';
 
 class Menu extends Component {
    constructor(props) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classes from './Typography.css';
-import List from '../../helper/List';
+import List from '../../../helper/List';
 
 const elements = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'];
 const aligns = ['left', 'center', 'right'];

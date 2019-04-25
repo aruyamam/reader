@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Card from '../../Card/Card';
-import Form from '../../Form/Form';
-import Typography from '../../Typography/Typography';
-import Button from '../../Buttons/Button/Button';
+import Card from '../../ui/Card/Card';
+import Form from '../../ui/Form/Form';
+import Typography from '../../ui/Typography/Typography';
+import Button from '../../ui/Buttons/Button/Button';
 import { registerUser } from '../../../store/actions/authAction';
 import validate, { objIsEmpty } from '../../../helper/validation';
 import classes from './Register.css';

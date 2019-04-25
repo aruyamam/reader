@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classes from './Modal.css';
-import List from '../../helper/List';
+import List from '../../../helper/List';
 
 const Modal = ({
    center, children, open, onClose, transparent, xy,

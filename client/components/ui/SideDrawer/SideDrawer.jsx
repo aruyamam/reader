@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import List from '../List/List';
-import ClassList from '../../helper/List';
-import { compareToToday } from '../../helper/date';
-import { updateFeed } from '../../store/actions/feedAction';
+import ClassList from '../../../helper/List';
+import { compareToToday } from '../../../helper/date';
+import { updateFeed } from '../../../store/actions/feedAction';
 import classes from './SideDrawer.css';
-import Loading from '../pages/Loading/Loading';
+import Loading from '../../pages/Loading/Loading';
 
 const SideDrawer = ({
    currentFeed, feeds, loading, open, style, updateFeed, user, width,

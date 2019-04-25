@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import Router from './Router';
 import configureStore from './store';
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from './components/hoc/ScrollToTop';
 import { setCurrentUser } from './store/actions/authAction';
 import setAuthToken from './helper/setAuthToken';
 
