@@ -1,0 +1,24 @@
+.card {
+   box-shadow: 0px 1px 2px #00000054, 0 1px 3px #0000002e;
+   border-radius: 4px;
+}
+
+.card:focus {
+   outline: dotted thin #0069c0;
+}
+
+.small {
+   padding: .5rem;
+}
+
+.medium {
+   padding: 1rem;
+}
+
+.big {
+   padding: 1.5rem;
+}
+
+.bleed {
+   padding: 0.5rem 0;
+}

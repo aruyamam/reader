@@ -1,0 +1,13 @@
+.feedForm {
+   max-width: 430px;
+   margin: 2rem auto 0;
+   padding: 2rem;
+}
+
+.title {
+   margin-bottom: 1rem;
+}
+
+.btn {
+   margin-top: 1rem;
+}

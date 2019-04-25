@@ -4,9 +4,14 @@
       "node": true,
       "mongo": true
    },
+   "parserOptions": {
+      "ecmaFeatures": {
+         "jsx": true
+      }
+   },
    "parser": "babel-eslint",
    "rules": {
-      "indent": ["error", 3, { "SwitchCase": 1}],
+      "indent": ["error", 3, { "SwitchCase": 1 }],
       "brace-style": ["error", "stroustrup"],
       "react/jsx-indent": ["error", 3],
       "react/jsx-indent-props": ["error", 3],
@@ -15,8 +20,6 @@
       "no-underscore-dangle": "off",
       "no-shadow": "off"
    },
-   "extends": [
-      "airbnb"
-   ],
+   "extends": ["airbnb"],
    "plugins": ["react"]
 }

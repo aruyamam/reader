@@ -1,0 +1,13 @@
+.grid {
+   flex: 1 1 auto;
+   margin-left: 0;
+   transition: All 0.3s ease-out;
+}
+
+.flex {
+   display: flex;
+}
+
+.block {
+   display: block;
+}

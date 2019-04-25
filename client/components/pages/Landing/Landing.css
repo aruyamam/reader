@@ -1,0 +1,29 @@
+.home {
+   height: 100vh;
+   width: 100%;
+   background-color: #0069c0;
+}
+
+.heading {
+   position: relative;
+   top: 50%;
+   transform: translateY(-50%);
+   color: #fff;
+   text-align: center;
+}
+
+.title {
+   margin: 0;
+   letter-spacing: .1rem;
+}
+
+.en {
+   margin: 0 0.2rem;
+   color: inherit;
+   letter-spacing: 0.4rem;
+}
+
+.link {
+   color: inherit;
+   text-decoration: none;
+}

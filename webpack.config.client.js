@@ -10,12 +10,11 @@ module.exports = {
    entry: [
       'webpack-hot-middleware/client?reload=true',
       '@babel/polyfill',
-      path.join(CURRENT_WORKING_DIR, 'client/main.js'),
+      path.join(CURRENT_WORKING_DIR, 'client/index.js'),
    ],
    output: {
       path: path.join(CURRENT_WORKING_DIR, '/dist'),
       filename: 'bundle.js',
-      publicPath: '/dist/',
    },
    module: {
       rules: [
@@ -26,7 +25,26 @@ module.exports = {
                loader: 'babel-loader',
             },
          },
+         {
+            test: /\.css$/,
+            use: [
+               { loader: 'style-loader' },
+               {
+                  loader: 'css-loader',
+                  options: {
+                     modules: true,
+                  },
+               },
+            ],
+         },
+         {
+            test: /\.svg$/,
+            loader: 'svg-inline-loader',
+         },
       ],
+   },
+   resolve: {
+      extensions: ['.js', '.jsx'],
    },
    plugins: [new webpack.HotModuleReplacementPlugin()],
 };

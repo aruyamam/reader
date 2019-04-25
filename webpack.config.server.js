@@ -1,6 +1,6 @@
 const path = require('path');
-const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
+const Dotenv = require('dotenv-webpack');
 
 const CURRENT_WORKING_DIR = process.cwd();
 
@@ -11,7 +11,7 @@ const config = {
    output: {
       path: path.join(CURRENT_WORKING_DIR, '/dist/'),
       filename: 'server.js',
-      publicPath: '/public/',
+      publicPath: '/dist/',
       libraryTarget: 'commonjs2',
    },
    externals: [nodeExternals()],
@@ -24,6 +24,7 @@ const config = {
          },
       ],
    },
+   plugins: [new Dotenv()],
 };
 
 module.exports = config;

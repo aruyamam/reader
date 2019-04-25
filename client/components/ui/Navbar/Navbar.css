@@ -1,0 +1,53 @@
+.Navbar {
+   position: fixed;
+   min-height: 61px;
+   width: 100%;
+   justify-content: space-between;
+   padding: 0.5rem 1.5rem 0.5rem 1rem;
+   background-color: #2196f3;
+   color: #fff;
+   box-shadow: 0 2px 5px #0000002e, 0 3px 10px #0000002e;
+   box-sizing: border-box;
+   z-index: 1;
+}
+
+.title {
+   margin-left: 1rem;
+   font-size: 1rem;
+}
+
+.title a {
+   color: inherit;
+   text-decoration: none;
+}
+
+.link {
+   padding: 10px 15px;
+   color: #fff;
+   border-radius: 4px;
+   font-size: 0.85rem;
+   text-decoration: none;
+   transition: background-color 0.2s ease-out;
+}
+
+.link:hover,
+.link:focus {
+   background-color: #29292914;
+}
+
+/* .title:focus,
+.login:focus,
+.logout:focus,
+.register:focus {
+   outline: dotted thin #fff;
+} */
+
+.avatar {
+   background: #9E9E9E;
+   border-radius: 50%;
+   font-size: 1rem;
+}
+
+.avatar:hover {
+   background: #9E9E9E;
+}
