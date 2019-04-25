@@ -2,7 +2,12 @@ import axios from 'axios';
 import {
    SET_ARTICLES, SET_CURRENT_FEED, SET_FEEDS, ADD_ARTICLES,
 } from './actionTypes';
-import { asyncActionStart, asyncActionEnd } from './asyncAction';
+import {
+   asyncActionStart,
+   asyncActionEnd,
+   fetchFeedsActionEnd,
+   fetchFeedsActionStart,
+} from './asyncAction';
 import { setError, clearError } from './errorAction';
 
 const addArticles = articles => ({
@@ -47,17 +52,17 @@ export const subscribeFeed = (feedUrl, userId) => async (dispatch) => {
 
 export const fetchFeeds = userId => async (dispatch) => {
    try {
-      dispatch(asyncActionStart());
+      dispatch(fetchFeedsActionStart());
       const res = await axios.get(`/api/feeds/${userId}`);
 
       dispatch(setFeeds(res.data));
       dispatch(clearError());
-      dispatch(asyncActionEnd());
+      dispatch(fetchFeedsActionEnd());
    }
    catch (err) {
       console.log(err);
-      dispatch(asyncActionEnd());
       dispatch(setError(err.message));
+      dispatch(fetchFeedsActionEnd());
    }
 };
 
@@ -86,29 +91,36 @@ export const fetchArticles = feedId => async (dispatch, getState) => {
       dispatch(asyncActionStart());
       const result = await axios.get(`/api/feeds/${user._id}/${feedId}/${offset}`);
       // console.log(results);
-      await dispatch(setAritcles(result.data));
+      dispatch(setAritcles(result.data));
       dispatch(setCurrentFeed(feedId));
       dispatch(clearError());
       dispatch(asyncActionEnd());
    }
    catch (err) {
       console.log(err);
-      dispatch(asyncActionEnd());
       dispatch(setError(err.message));
+      dispatch(asyncActionEnd());
    }
 };
 
 export const updateArticles = feedId => async (dispatch, getState) => {
-   const {
-      auth: { user },
-      feed: { count, offset },
-   } = getState();
+   try {
+      const {
+         auth: { user },
+         feed: { count, offset },
+      } = getState();
 
-   dispatch(asyncActionStart());
-   const result = await axios.post(`/api/feeds/${user._id}/${feedId}`, { count, offset });
-   // console.log(result);
-   dispatch(addArticles(result.data));
-   dispatch(asyncActionEnd());
+      dispatch(asyncActionStart());
+      const result = await axios.post(`/api/feeds/${user._id}/${feedId}`, { count, offset });
+      // console.log(result);
+      dispatch(addArticles(result.data));
+      dispatch(asyncActionEnd());
+   }
+   catch (err) {
+      console.log(err);
+      dispatch(setError(err.message));
+      dispatch(asyncActionEnd());
+   }
 };
 
 export const readArticle = (feedId, article) => async (dispatch, getState) => {

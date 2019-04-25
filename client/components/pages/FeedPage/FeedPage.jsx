@@ -24,7 +24,6 @@ class FeedPage extends Component {
       const {
          articles, error, loading, match, readArticle,
       } = this.props;
-      // console.log(articles);
 
       return (
          <Fragment>

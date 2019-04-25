@@ -10,7 +10,7 @@ class Home extends Component {
       const { fetchFeeds, setCurrentFeed, user } = this.props;
 
       if (user.isAuthenticated) {
-         fetchFeeds(user._id);
+         // fetchFeeds(user._id);
          setCurrentFeed('');
       }
    }

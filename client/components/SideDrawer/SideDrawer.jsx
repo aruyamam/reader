@@ -94,7 +94,7 @@ const mapStates = state => ({
    currentFeed: state.feed.currentFeed,
    // feeds: state.feed.feeds.map(feed => ({ ...feed.feed })),
    feeds: state.feed.feeds,
-   loading: state.async.loading,
+   loading: state.async.fetchFeeds,
 });
 
 const actions = {
