@@ -1,5 +1,6 @@
 node_modules/
-dist/
+dist/*server.js
+dist/bundle.js
 
 .env
 *.log

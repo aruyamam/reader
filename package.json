@@ -3,8 +3,14 @@
    "version": "1.0.0",
    "main": "index.js",
    "license": "MIT",
+   "private": true,
+   "engines": {
+      "node": "10.x"
+   },
    "scripts": {
-      "dev": "nodemon"
+      "dev": "nodemon",
+      "build": "webpack --config webpack.config.production.js && webpack --mode=production --config webpack.config.server.js",
+      "start": "node dist/server.js"
    },
    "dependencies": {
       "@babel/polyfill": "^7.2.5",
