@@ -105,11 +105,14 @@ const subscribeFeed = async (req, res) => {
       return res.json({ error: feed.errno });
    }
 
+   // すでに他人が購読していないかチェック
    const foundFeed = await Feed.findOne({ link: feed.link });
 
    const { items } = feed;
 
+   // まったく誰も登録していなかった場合
    if (!foundFeed) {
+      // 新しくフィードを作る
       feed = new Feed({
          title: feed.title,
          link: feed.link,
@@ -120,6 +123,19 @@ const subscribeFeed = async (req, res) => {
       feed = await feed.save();
    }
    else {
+      // すでに本人が購読していた場合はそのフィードを返す
+      const subscribedFeed = await Subscribe.findOne({
+         feed: Types.ObjectId(foundFeed._id),
+         user: Types.ObjectId(userId),
+      })
+         .populate('feed')
+         .exec();
+
+      if (subscribedFeed) {
+         return res.status(200).json(subscribedFeed.feed);
+      }
+
+      // すでに他人が購読していた場合
       feed = foundFeed;
    }
 
