@@ -6,6 +6,7 @@ import Form from '../../ui/Form/Form';
 import Typography from '../../ui/Typography/Typography';
 import Button from '../../ui/Buttons/Button/Button';
 import { loginUser } from '../../../store/actions/authAction';
+import { fetchFeeds } from '../../../store/actions/feedAction';
 import validate, { objIsEmpty } from '../../../helper/validation';
 import classes from './Login.css';
 
@@ -37,7 +38,9 @@ class Login extends Component {
 
    handleSubmit = async (event) => {
       event.preventDefault();
-      const { handleDrawer, history, loginUser } = this.props;
+      const {
+         fetchFeeds, handleDrawer, history, loginUser,
+      } = this.props;
 
       const { formIsValid, email, password } = this.state;
 
@@ -68,6 +71,7 @@ class Login extends Component {
       if (formIsValid) {
          const result = await loginUser(user);
          if (result) {
+            await fetchFeeds(result._id);
             history.push('/reader');
             handleDrawer();
          }
@@ -147,6 +151,7 @@ const mapStates = state => ({
 });
 
 const actions = {
+   fetchFeeds,
    loginUser,
 };
 
@@ -156,6 +161,7 @@ const {
 
 Login.propTypes = {
    error: string.isRequired,
+   fetchFeeds: func.isRequired,
    handleDrawer: func.isRequired,
    history: shape({
       push: func.isRequired,

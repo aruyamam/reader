@@ -6,6 +6,7 @@ import Form from '../../ui/Form/Form';
 import Typography from '../../ui/Typography/Typography';
 import Button from '../../ui/Buttons/Button/Button';
 import { registerUser } from '../../../store/actions/authAction';
+import { fetchFeeds } from '../../../store/actions/feedAction';
 import validate, { objIsEmpty } from '../../../helper/validation';
 import classes from './Register.css';
 
@@ -46,7 +47,9 @@ class Register extends Component {
 
    handleSubmit = async (event) => {
       event.preventDefault();
-      const { handleDrawer, history, registerUser } = this.props;
+      const {
+         fetchFeeds, handleDrawer, history, registerUser,
+      } = this.props;
       const {
          formIsValid, username, email, password,
       } = this.state;
@@ -81,6 +84,7 @@ class Register extends Component {
       if (formIsValid) {
          const result = await registerUser(user);
          if (result) {
+            await fetchFeeds(result._id);
             history.push('/reader');
             handleDrawer();
          }
@@ -170,6 +174,7 @@ const mapStates = state => ({
 });
 
 const actions = {
+   fetchFeeds,
    registerUser,
 };
 
@@ -179,6 +184,7 @@ const {
 
 Register.propTypes = {
    error: string.isRequired,
+   fetchFeeds: func.isRequired,
    handleDrawer: func.isRequired,
    history: shape({
       push: func.isRequired,
