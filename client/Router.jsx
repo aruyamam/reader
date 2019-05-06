@@ -26,9 +26,19 @@ class Router extends Component {
 
    componentDidMount() {
       const { user, fetchFeeds } = this.props;
+
+      // ユーザーがログインしていたら
       if (user.isAuthenticated) {
          fetchFeeds(user._id);
-         this.setState({ isDrawerOpen: true });
+
+         // 最初の表示もしくは前回SideDrawerを開いていたら
+         // SideDrawerを開く
+         if (
+            !localStorage.getItem('isDrawerOpen')
+            || localStorage.getItem('isDrawerOpen') === 'true'
+         ) {
+            this.setState({ isDrawerOpen: true });
+         }
       }
    }
 
@@ -53,12 +63,18 @@ class Router extends Component {
    };
 
    handleDrawer = () => {
-      this.setState(state => ({
-         isDrawerOpen: !state.isDrawerOpen,
-      }));
+      this.setState((state) => {
+         localStorage.setItem('isDrawerOpen', `${!state.isDrawerOpen}`);
+
+         return { isDrawerOpen: !state.isDrawerOpen };
+      });
    };
 
-   closeDrawer = () => this.setState({ isDrawerOpen: false });
+   closeDrawer = () => {
+      const { isDrawerOpen } = this.state;
+      localStorage.setItem('isDrawerOpen', `${isDrawerOpen}`);
+      this.setState({ isDrawerOpen: false });
+   };
 
    render() {
       const { isDrawerOpen } = this.state;
