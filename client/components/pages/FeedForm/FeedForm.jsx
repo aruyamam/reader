@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Typography from '../../ui/Typography/Typography';
 import Form from '../../ui/Form/Form';
 import Button from '../../ui/Buttons/Button/Button';
 import { fetchFeeds, subscribeFeed } from '../../../store/actions/feedAction';
+import { clearError } from '../../../store/actions/errorAction';
 import classes from './FeedForm.css';
 import Card from '../../ui/Card/Card';
 import validate from '../../../helper/validation';
 
 const FeedForm = ({
-   error, fetchFeeds, history, loading, userId, subscribeFeed,
+   clearError, error, fetchFeeds, history, loading, userId, subscribeFeed,
 }) => {
    const [state, setState] = useState({
       feedUrl: '',
       message: '',
    });
+
+   useEffect(
+      () => () => {
+         clearError();
+      },
+      [],
+   );
 
    const handleOnChange = (event) => {
       const error = validate('url', event.target.value, {
@@ -45,12 +53,14 @@ const FeedForm = ({
       // フィードページにリダイレクト
       if (state.message === '') {
          const feed = await subscribeFeed(state.feedUrl, userId);
-         await fetchFeeds(userId);
-         setState(prevState => ({
-            ...prevState,
-            feedUrl: '',
-         }));
-         history.push(`/reader/${feed._id}/`);
+         if (feed) {
+            await fetchFeeds(userId);
+            setState(prevState => ({
+               ...prevState,
+               feedUrl: '',
+            }));
+            history.push(`/reader/${feed._id}/`);
+         }
       }
    };
 
@@ -83,6 +93,7 @@ const mapStates = state => ({
 });
 
 const actions = {
+   clearError,
    fetchFeeds,
    subscribeFeed,
 };
@@ -92,6 +103,7 @@ const {
 } = PropTypes;
 
 FeedForm.propTypes = {
+   clearError: func.isRequired,
    error: string.isRequired,
    fetchFeeds: func.isRequired,
    history: shape({

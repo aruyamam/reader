@@ -44,9 +44,8 @@ export const subscribeFeed = (feedUrl, userId) => async (dispatch) => {
       return feed.data;
    }
    catch (err) {
-      console.log(err);
       dispatch(asyncActionEnd());
-      dispatch(setError(err.message));
+      dispatch(setError('フィードが見つかりません'));
    }
 };
 
