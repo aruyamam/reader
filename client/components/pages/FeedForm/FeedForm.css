@@ -11,3 +11,12 @@
 .btn {
    margin-top: 1rem;
 }
+
+.error {
+   margin-bottom: 1rem;
+   padding: 1rem;
+   color: red;
+   text-align: center;
+   font-weight: bold;
+   font-size: 1.1rem;
+}

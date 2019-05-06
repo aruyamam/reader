@@ -1,3 +1,4 @@
+// validation function
 const required = value => value.trim() !== '';
 
 const minLength = (value, policy) => {
@@ -26,11 +27,20 @@ const validateEmail = (value) => {
    return true;
 };
 
+const validateUrl = (value) => {
+   if (value) {
+      return /^http(s)?:\/\/[\w.-]+(?:\.[\w\.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/.test(value);
+   }
+
+   return true;
+};
+
 const funcMap = {
    required,
    minLength,
    maxLength,
    validateEmail,
+   validateUrl,
 };
 
 const messages = {
@@ -38,15 +48,17 @@ const messages = {
    minLength: (attr, policy) => `${attr}は${policy}文字以上必須です。`,
    maxLength: (attr, policy) => `${attr}は${policy}文字以下必須です。`,
    validateEmail: () => '不正なメールアドレスです。',
+   validateUrl: () => '不正なURLです。',
 };
 
 const nameMap = {
    username: 'ユーザーネーム',
    email: 'メールドレス',
    password: 'パスワード',
+   url: 'アドレス',
 };
 
-const validate = (name, value, rules) => {
+export default (name, value, rules) => {
    const errors = {};
    let isValid = true;
 
@@ -64,5 +76,3 @@ const validate = (name, value, rules) => {
 };
 
 export const objIsEmpty = obj => Object.keys(obj).length === 0;
-
-export default validate;

@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classes from './TextField.css';
-import ClassList from '../../../../helper/List';
 
 const TextField = ({
-   color,
-   error,
+   color, // effectのボーダーラインの色
+   error, // boolean エラーが有るか無いか
    id,
-   label,
-   messages,
-   type,
-   placeholder,
-   touched,
-   value,
+   label, // placeholderの代わりに表示される
+   messages, // エラーが有ると表示される
+   type, // input type
+   value, // input value
    onBlur,
    onChange,
 }) => {
@@ -47,7 +44,6 @@ const TextField = ({
             className={classes.TextField}
             id={id}
             type={type}
-            placeholder={placeholder}
             name={id}
             value={value}
             onBlur={handleBlur}
@@ -73,6 +69,7 @@ const TextField = ({
 
 TextField.defaultProps = {
    color: '#0069c0',
+   error: false,
    id: '',
    label: '',
    onChange: null,
@@ -83,10 +80,10 @@ TextField.defaultProps = {
 
 TextField.propTypes = {
    color: PropTypes.string,
+   error: PropTypes.bool,
    id: PropTypes.string,
    label: PropTypes.string,
    onChange: PropTypes.func,
-   placeholder: PropTypes.string,
    type: PropTypes.string,
    value: PropTypes.string,
 };
