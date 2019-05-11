@@ -43,7 +43,7 @@ class FeedPage extends Component {
             {loading && (
                <div className={classes.loader}>
                   <div className={classes.loaderInner}>
-                     <Loading />
+                     <Loading size="small" />
                   </div>
                </div>
             )}

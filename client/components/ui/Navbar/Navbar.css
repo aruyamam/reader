@@ -8,7 +8,7 @@
    color: #fff;
    box-shadow: 0 2px 5px #0000002e, 0 3px 10px #0000002e;
    box-sizing: border-box;
-   z-index: 1;
+   z-index: 10;
 }
 
 .title {

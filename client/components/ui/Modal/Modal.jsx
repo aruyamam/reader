@@ -4,7 +4,7 @@ import classes from './Modal.css';
 import List from '../../../helper/List';
 
 const Modal = ({
-   center, children, open, onClose, transparent, xy,
+   center, children, open, onClose, role, transparent, xy, zIndex,
 }) => {
    const handleOnKeyUp = (event) => {
       // エスケープキーが押された場合にメニューを閉じる
@@ -37,11 +37,14 @@ const Modal = ({
                onClick={onClose}
                onKeyUp={handleOnKeyUp}
                className={modalClassList.strList}
-               role="dialog"
+               role={role}
+               style={{ zIndex }}
             >
-               <div className={classList.strList} style={style}>
-                  {children}
-               </div>
+               {children && (
+                  <div className={classList.strList} style={style}>
+                     {children}
+                  </div>
+               )}
             </div>
          )}
       </Fragment>
@@ -50,25 +53,30 @@ const Modal = ({
 
 Modal.defaultProps = {
    center: false,
+   children: null,
    onClose: null,
+   role: 'dialog',
    transparent: false,
    xy: { x: 0, y: 0 },
+   zIndex: 100,
 };
 
 const {
-   arrayOf, bool, element, func, number, oneOfType, shape, string,
+   bool, func, number, node, shape, string,
 } = PropTypes;
 
 Modal.propTypes = {
    center: bool,
-   children: oneOfType([string, element, arrayOf(oneOfType([element, bool]))]).isRequired,
+   children: node,
    open: bool.isRequired,
    onClose: func,
+   role: string,
    transparent: PropTypes.bool,
    xy: shape({
       x: number.isRequired,
       y: number.isRequired,
    }),
+   zIndex: number,
 };
 
 export default Modal;

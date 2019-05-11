@@ -10,6 +10,7 @@ import Home from './components/pages/Home';
 import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
 import FeedPage from './components/pages/FeedPage/FeedPage';
+import Modal from './components/ui/Modal/Modal';
 import { fetchArticles, fetchFeeds, updateArticles } from './store/actions/feedAction';
 import classes from './Router.css';
 
@@ -19,12 +20,14 @@ class Router extends Component {
 
       this.state = {
          isDrawerOpen: false,
+         width: window.innerWidth,
       };
 
       this.mainPageRef = React.createRef();
    }
 
    componentDidMount() {
+      window.addEventListener('resize', this.handleResize);
       const { user, fetchFeeds } = this.props;
 
       // ユーザーがログインしていたら
@@ -41,6 +44,14 @@ class Router extends Component {
          }
       }
    }
+
+   componentWillUnmount() {
+      window.removeEventListener('resize', this.handleResize);
+   }
+
+   handleResize = () => {
+      this.setState({ width: window.innerWidth });
+   };
 
    handleOnScroll = (e) => {
       const { feed, loading, updateArticles } = this.props;
@@ -77,7 +88,7 @@ class Router extends Component {
    };
 
    render() {
-      const { isDrawerOpen } = this.state;
+      const { isDrawerOpen, width } = this.state;
       const { user } = this.props;
 
       return (
@@ -114,10 +125,15 @@ class Router extends Component {
                            className={classes.mainContent}
                            xs={12}
                            style={{
-                              marginLeft: isDrawerOpen ? '268px' : '0',
+                              marginLeft: width > 800 && isDrawerOpen ? '268px' : '0',
                            }}
                            onScroll={this.handleOnScroll}
                         >
+                           <Modal
+                              onClose={this.handleDrawer}
+                              open={width <= 800 && isDrawerOpen}
+                              zIndex={5}
+                           />
                            <Switch>
                               <Route exact path="/reader" component={Home} />
                               <Route
