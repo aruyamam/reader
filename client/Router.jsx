@@ -112,14 +112,6 @@ class Router extends Component {
                            user={user}
                            width="268px"
                         />
-                        {/* <Grid
-                           classes={classes}
-                           container
-                           xs={1}
-                           open={isDrawerOpen}
-                           drawerWidth="250"
-                           style={{ maxWidth: '100%', overflowX: 'hidden' }}
-                        > */}
                         <Grid
                            ref={this.mainPageRef}
                            className={classes.mainContent}
@@ -161,7 +153,6 @@ class Router extends Component {
                            </Switch>
                         </Grid>
                      </Grid>
-                     {/* </Grid> */}
                   </Fragment>
                )}
             />

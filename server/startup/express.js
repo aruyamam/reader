@@ -4,11 +4,8 @@ import helmet from 'helmet';
 import cors from 'cors';
 import error from '../middleware/error';
 import devBundle from '../devBundle';
-import template from '../../template';
 import authRoutes from '../routes/authr.routes';
 import feedRoutes from '../routes/feed.routes';
-
-// import 'express-async-errors';
 
 const CURRENT_WORKING_DIR = process.cwd();
 
