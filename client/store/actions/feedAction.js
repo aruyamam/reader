@@ -10,6 +10,12 @@ import {
 } from './asyncAction';
 import { setError, clearError } from './errorAction';
 
+export const findFeed = async (feedId) => {
+   const res = await axios.get(`/api/feeds?id=${feedId}`);
+
+   return res.data;
+};
+
 const addArticles = articles => ({
    type: ADD_ARTICLES,
    articles,

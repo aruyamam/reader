@@ -5,7 +5,10 @@ import auth from '../middleware/auth';
 const router = express.Router();
 
 // @/api/feeds/
-router.route('/').post(auth, feedCtrl.subscribeFeed);
+router
+   .route('/')
+   .get(feedCtrl.findFeed)
+   .post(auth, feedCtrl.subscribeFeed);
 
 router
    .route('/:userId')

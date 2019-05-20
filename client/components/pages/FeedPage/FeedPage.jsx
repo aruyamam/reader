@@ -1,15 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchArticles, readArticle } from '../../../store/actions/feedAction';
+import { fetchArticles, findFeed, readArticle } from '../../../store/actions/feedAction';
 import FeedContent from './FeedContent/FeedContent';
 import Loading from '../Loading/Loading';
 import classes from './FeedPage.css';
 
 class FeedPage extends Component {
-   componentDidMount() {
-      const { fetchArticles, match } = this.props;
-      fetchArticles(match.params.feedId);
+   async componentDidMount() {
+      const { fetchArticles, history, match } = this.props;
+      const response = await findFeed(match.params.feedId);
+      if (response) {
+         fetchArticles(match.params.feedId);
+      }
+      else {
+         history.push('/404');
+      }
    }
 
    componentDidUpdate(prevProps) {
@@ -68,6 +74,9 @@ FeedPage.propTypes = {
    articles: PropTypes.arrayOf(PropTypes.object).isRequired,
    error: PropTypes.string.isRequired,
    fetchArticles: PropTypes.func.isRequired,
+   history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+   }).isRequired,
    loading: PropTypes.bool.isRequired,
    mainPageRef: PropTypes.shape({
       current: PropTypes.object,

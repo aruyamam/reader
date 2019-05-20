@@ -4,6 +4,19 @@ import Feed from '../models/Feed';
 import Subscribe from '../models/Subscribe';
 import Article from '../models/Article';
 
+const findFeed = async (req, res) => {
+   if (req.query.id.length !== 24) {
+      return res.send(false);
+   }
+
+   const feed = await Feed.findById(req.query.id);
+   if (feed) {
+      return res.send(true);
+   }
+
+   return res.send(false);
+};
+
 const fetchFeeds = async (req, res) => {
    const feeds = await Subscribe.aggregate([
       {
@@ -228,6 +241,7 @@ const updateFeed = async (req, res) => {
 export default {
    fetchArticles,
    fetchFeeds,
+   findFeed,
    readArticle,
    subscribeFeed,
    updateArticles,

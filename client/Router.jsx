@@ -10,6 +10,7 @@ import Home from './components/pages/Home';
 import Login from './components/pages/Login/Login';
 import Register from './components/pages/Register/Register';
 import FeedPage from './components/pages/FeedPage/FeedPage';
+import NotFound from './components/pages/NotFound/NotFound'
 import Modal from './components/ui/Modal/Modal';
 import { fetchArticles, fetchFeeds, updateArticles } from './store/actions/feedAction';
 import classes from './Router.css';
@@ -150,6 +151,8 @@ class Router extends Component {
                                     <Login handleDrawer={this.handleDrawer} {...props} />
                                  )}
                               />
+                              <Route path="/404" component={NotFound} />
+                              <Route component={NotFound} />
                            </Switch>
                         </Grid>
                      </Grid>
