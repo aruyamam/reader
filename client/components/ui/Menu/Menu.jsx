@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Card from '../Card/Card';
 import List from '../List/List';
 import classes from './Menu.css';
@@ -11,12 +11,12 @@ class Menu extends Component {
    constructor(props) {
       super(props);
 
-      this.firstItemRef = React.createRef();
+      // this.firstItemRef = React.createRef();
       this.lastItemRef = React.createRef();
    }
 
    componentDidMount() {
-      this.firstItemRef.current.focus();
+      this.lastItemRef.current.focus();
    }
 
    handleLogout = () => {
@@ -50,7 +50,7 @@ class Menu extends Component {
       return (
          <Card className={classes.menu} size="bleed">
             <List role="menu">
-               <List.Item
+               {/* <List.Item
                   as={Link}
                   onKeyDown={this.handleKeyDown}
                   ref={this.firstItemRef}
@@ -58,7 +58,7 @@ class Menu extends Component {
                   tabIndex="0"
                >
                   設定
-               </List.Item>
+               </List.Item> */}
                <List.Item
                   onClick={this.handleLogout}
                   onKeyDown={this.handleKeyDown}

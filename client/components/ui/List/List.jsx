@@ -21,12 +21,10 @@ List.defaultProps = {
    role: '',
 };
 
-const {
-   arrayOf, element, oneOfType, string,
-} = PropTypes;
+const { node, string } = PropTypes;
 
 List.propTypes = {
-   children: oneOfType([arrayOf(string), arrayOf(element), string]).isRequired,
+   children: node.isRequired,
    role: string,
 };
 
