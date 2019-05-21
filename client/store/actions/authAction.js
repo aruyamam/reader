@@ -19,7 +19,7 @@ export const registerUser = user => async (dispatch) => {
       setAuthToken(response.headers['x-auth-token']);
       dispatch(asyncActionEnd());
 
-      return true;
+      return response.data;
    }
    catch (err) {
       dispatch(setError(err.response.data.error));
